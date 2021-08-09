@@ -1,6 +1,6 @@
 import * as gherkinUtils from "./utils/gherkin";
 import { ResultError } from "../types/result";
-import { Feature } from "../types/cucumber";
+import { Feature, Step, Tag } from "../types/cucumber";
 
 const _ = require("lodash");
 
@@ -44,8 +44,8 @@ export function run(feature: Feature, unused, configuration) {
     const mergedConfiguration = mergeConfiguration(configuration);
 
     function test(parsedLocation, type) {
-    // location.column is 1 index based so, when we compare with the expected
-    // indentation we need to subtract 1
+        // location.column is 1 index based so, when we compare with the expected
+        // indentation we need to subtract 1
         if (parsedLocation.column - 1 !== mergedConfiguration[type]) {
             errors.push({
                 message: `Wrong indentation for "${type
@@ -57,13 +57,13 @@ export function run(feature: Feature, unused, configuration) {
         }
     }
 
-    function testStep(step) {
-        let stepType = gherkinUtils.getLanguageInsitiveKeyword(step, feature.language);
+    function testStep(step: Step) {
+        let stepType = gherkinUtils.getLanguageInsensitiveKeyword(step, feature.language);
         stepType = stepType in configuration ? stepType : "Step";
         test(step.location, stepType);
     }
 
-    function testTags(tags, type) {
+    function testTags(tags: Tag[] | null | undefined, type: string) {
         _(tags).groupBy("location.line").forEach(tagLocationGroup => {
             const firstTag = _(tagLocationGroup).sortBy("location.column").head();
             test(firstTag.location, type);

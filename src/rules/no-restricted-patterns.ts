@@ -46,7 +46,7 @@ function getRestrictedPatterns(configuration) {
 }
 
 function getRestrictedPatternsForNode(node, restrictedPatterns, language) {
-    let key = gherkinUtils.getLanguageInsitiveKeyword(node, language).toLowerCase();
+    let key = gherkinUtils.getLanguageInsensitiveKeyword(node, language).toLowerCase();
     return restrictedPatterns[key];
 }
 

@@ -1,5 +1,6 @@
 import { ResultError } from "../types/result";
 import { Feature } from "../types/cucumber";
+import { File } from "../types/linter";
 
 export const name = "no-dupe-scenario-names";
 export const availableConfigs = [
@@ -8,7 +9,7 @@ export const availableConfigs = [
 ];
 let scenarios = [];
 
-export function run(feature: Feature, file, configuration) {
+export function run(feature: Feature, file: File, configuration) {
     if (!feature) {
         return [];
     }

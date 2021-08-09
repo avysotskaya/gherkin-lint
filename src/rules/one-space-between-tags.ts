@@ -1,5 +1,5 @@
 import { ResultError } from "../types/result";
-import { Feature } from "../types/cucumber";
+import { Examples, Feature, Scenario } from "../types/cucumber";
 
 const _ = require("lodash");
 
@@ -22,7 +22,7 @@ export function run(feature: Feature) {
     return errors;
 }
 
-function testTags(node, errors) {
+function testTags(node: Feature | Scenario | Examples, errors: ResultError[]) {
     _(node.tags)
         .groupBy("location.line")
         .sortBy("location.column")

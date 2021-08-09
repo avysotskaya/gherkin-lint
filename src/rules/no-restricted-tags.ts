@@ -1,5 +1,5 @@
 import { ResultError } from "../types/result";
-import { Feature } from "../types/cucumber";
+import { Feature, Tag } from "../types/cucumber";
 import * as gherkinUtils from "./utils/gherkin";
 
 const _ = require("lodash");
@@ -48,7 +48,7 @@ function checkTags(node, language, forbiddenTags, forbiddenPatterns, errors) {
     });
 }
 
-function isForbidden(tag, forbiddenTags, forbiddenPatterns) {
+function isForbidden(tag: Tag, forbiddenTags, forbiddenPatterns) {
     return _.includes(forbiddenTags, tag.name)
         || forbiddenPatterns.some((pattern) => pattern.test(tag.name));
 }

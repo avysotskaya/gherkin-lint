@@ -1,19 +1,20 @@
 import { ResultError } from "../types/result";
 import * as gherkinUtils from "./utils/gherkin";
+import { Feature, Step } from "../types/cucumber";
 
 export const name = "keywords-in-logical-order";
 
-export function run(feature) {
+export function run(feature: Feature) {
     if (!feature) {
         return [];
     }
     let errors: ResultError[] = [];
-    feature.children.forEach((child) => {
+    feature.children?.forEach((child) => {
         const node = child.background || child.scenario;
         const keywordList = ["given", "when", "then"];
         let maxKeywordPosition = 0;
-        node.steps.forEach((step) => {
-            const keyword = gherkinUtils.getLanguageInsitiveKeyword(
+        node?.steps?.forEach((step) => {
+            const keyword = gherkinUtils.getLanguageInsensitiveKeyword(
                 step,
                 feature.language
             );
@@ -23,7 +24,7 @@ export function run(feature) {
                 return;
             }
             if (keywordPosition < maxKeywordPosition) {
-                let maxKeyword = keywordList[maxKeywordPosition];
+                const maxKeyword = keywordList[maxKeywordPosition];
                 errors.push(createError(step, maxKeyword));
             }
             maxKeywordPosition =
@@ -33,10 +34,10 @@ export function run(feature) {
     return errors;
 }
 
-function createError(step, maxKeyword) {
+function createError(step: Step, maxKeyword: string) {
     return {
         message: `Step "${step.keyword}${step.text}" should not appear after step using keyword ${maxKeyword}`,
         rule: name,
-        line: step.location.line,
+        line: step.location?.line,
     };
 }

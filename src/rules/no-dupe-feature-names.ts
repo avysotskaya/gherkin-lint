@@ -1,10 +1,11 @@
 import { ResultError } from "../types/result";
 import { Feature } from "../types/cucumber";
+import { File } from "../types/linter";
 
 export const name = "no-dupe-feature-names";
 const features = [];
 
-export function run(feature: Feature, file) {
+export function run(feature: Feature, file: File) {
     if (!feature) {
         return [];
     }

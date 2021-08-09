@@ -27,6 +27,5 @@ export function printResults(results) {
     };
     let convert = require("xml-js");
     const xunitXml = convert.js2xml(testSuiteReport, { compact: true, spaces: 4 });
-    /*eslint no-console: "off"*/
-    console.error(xunitXml);
+    process.stdout.write(xunitXml);
 }

@@ -2,8 +2,8 @@ const _ = require("lodash");
 const Gherkin = require("gherkin").default;
 // We use the node's keyword to determine the node's type
 // because it's the only way to distinguish a scenario with a scenario outline
-export function getNodeType(node, language) {
-    const key = getLanguageInsitiveKeyword(node, language).toLowerCase();
+export function getNodeType(node, language: string | null | undefined) {
+    const key = getLanguageInsensitiveKeyword(node, language).toLowerCase();
     const stepKeys = [
         "given",
         "when",
@@ -29,7 +29,7 @@ export function getNodeType(node, language) {
     return "";
 }
 
-export function getLanguageInsitiveKeyword(node, language) {
-    const languageMapping = Gherkin.dialects()[language];
+export function getLanguageInsensitiveKeyword(node, language: string | null| undefined) {
+    const languageMapping = Gherkin.dialects()[language || "en"];
     return _.findKey(languageMapping, values => values instanceof Array && values.includes(node.keyword));
 }

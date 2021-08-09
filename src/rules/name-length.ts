@@ -1,5 +1,5 @@
 import { ResultError } from "../types/result";
-import { Feature } from "../types/cucumber";
+import { Background, Feature, Scenario } from "../types/cucumber";
 
 const _ = require("lodash");
 
@@ -22,9 +22,9 @@ function test(nameString, location, configuration, type) {
     }
 }
 
-function testSteps(node, mergedConfiguration) {
-    node.steps.forEach(step => {
-    // Check Step name length
+function testSteps(node: Background | Scenario, mergedConfiguration: any) {
+    node.steps?.forEach(step => {
+        // Check Step name length
         test(step.text, step.location, mergedConfiguration, "Step");
     });
 }
@@ -42,8 +42,8 @@ export function run(feature: Feature, unused, configuration) {
             test(child.rule.name, child.rule.location, mergedConfiguration, "Rule");
         } else if (child.background) {
             testSteps(child.background, mergedConfiguration);
-        } else {
-            test(child.scenario?.name, child.scenario?.location, mergedConfiguration, "Scenario");
+        } else if (child.scenario) {
+            test(child.scenario.name, child.scenario.location, mergedConfiguration, "Scenario");
             testSteps(child.scenario, mergedConfiguration);
         }
     });

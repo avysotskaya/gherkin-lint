@@ -5,6 +5,7 @@ import * as fs from "fs";
 const stripJsonComments = require("strip-json-comments");
 
 export const defaultConfigFileName = ".gherkin-lintrc.json";
+export const defaultFormat = "stylish";
 
 export function getConfiguration(configPath: string, additionalRulesDirs: string[]) {
     if (configPath) {

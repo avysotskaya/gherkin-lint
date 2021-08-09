@@ -1,5 +1,5 @@
 import { ResultError } from "../types/result";
-import { Feature } from "../types/cucumber";
+import { Examples, Feature, Scenario, Tag } from "../types/cucumber";
 
 const _ = require("lodash");
 
@@ -34,7 +34,7 @@ function getAllowedPatterns(configuration) {
     return (configuration.patterns || []).map((pattern) => new RegExp(pattern));
 }
 
-function checkTags(node, allowedTags, allowedPatterns, errors) {
+function checkTags(node: Feature | Scenario | Examples, allowedTags, allowedPatterns, errors) {
     return (node.tags || [])
         .filter(tag => !isAllowed(tag, allowedTags, allowedPatterns))
         .forEach(tag => {
@@ -47,10 +47,10 @@ function isAllowed(tag, allowedTags, allowedPatterns) {
         || allowedPatterns.some((pattern) => pattern.test(tag.name));
 }
 
-function createError(node, tag) {
+function createError(node: Feature | Scenario | Examples, tag: Tag) {
     return {
         message: `Not allowed tag ${tag.name} on ${node.keyword}`,
         rule: name,
-        line: tag.location.line,
+        line: tag.location?.line,
     };
 }

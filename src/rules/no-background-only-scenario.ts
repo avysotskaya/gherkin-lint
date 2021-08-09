@@ -1,5 +1,5 @@
 import { ResultError } from "../types/result";
-import { Feature } from "../types/cucumber";
+import { Background, Feature } from "../types/cucumber";
 
 export const name = "no-background-only-scenario";
 
@@ -22,10 +22,10 @@ export function run(feature: Feature) {
     return errors;
 }
 
-function createError(background) {
+function createError(background: Background) {
     return {
         message: "Backgrounds are not allowed when there is just one scenario.",
         rule: name,
-        line: background.location.line,
+        line: background.location?.line,
     };
 }

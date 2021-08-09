@@ -1,5 +1,5 @@
 import { ResultError } from "../types/result";
-import { Feature } from "../types/cucumber";
+import { Examples, Feature, Scenario } from "../types/cucumber";
 
 export const name = "no-partially-commented-tag-lines";
 
@@ -20,13 +20,13 @@ export function run(feature: Feature) {
     return errors;
 }
 
-function checkTags(node, errors) {
-    node.tags.forEach(tag => {
-        if (tag.name.indexOf("#") > 0) {
+function checkTags(node: Feature | Scenario | Examples, errors: ResultError[]) {
+    node.tags?.forEach(tag => {
+        if (tag.name && tag.name.indexOf("#") > 0) {
             errors.push({
                 message: "Partially commented tag lines not allowed",
                 rule: name,
-                line: tag.location.line,
+                line: tag.location?.line,
             });
         }
     });

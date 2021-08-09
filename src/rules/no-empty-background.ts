@@ -1,5 +1,5 @@
 import { ResultError } from "../types/result";
-import { Feature } from "../types/cucumber";
+import { Background, Feature } from "../types/cucumber";
 
 export const name = "no-empty-background";
 
@@ -18,10 +18,10 @@ export function run(feature: Feature) {
     return errors;
 }
 
-function createError(background) {
+function createError(background: Background) {
     return {
         message: "Empty backgrounds are not allowed.",
         rule: name,
-        line: background.location.line,
+        line: background.location?.line,
     };
 }

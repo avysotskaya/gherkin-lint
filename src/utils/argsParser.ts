@@ -24,5 +24,11 @@ export function getArgumentsParsed() {
             default: [],
             description: "List of additional rule directories",
         },
+        format: {
+            type: "string",
+            alias: "-f",
+            default: configParser.defaultFormat,
+            description: `Output format. Possible values: json, stylish, xunit. Defaults to ${configParser.defaultFormat}`,
+        },
     }).argv;
 }

@@ -1,5 +1,5 @@
 import { ResultError } from "../types/result";
-import { Feature } from "../types/cucumber";
+import { Feature, Step } from "../types/cucumber";
 import * as gherkinUtils from "./utils/gherkin";
 
 export const name = "use-and";
@@ -14,7 +14,7 @@ export function run(feature: Feature) {
         let previousKeyword = undefined;
         if (node && "steps" in node) {
             node.steps?.forEach(step => {
-                const keyword = gherkinUtils.getLanguageInsitiveKeyword(step, feature.language);
+                const keyword = gherkinUtils.getLanguageInsensitiveKeyword(step, feature.language);
                 if (keyword === "and") {
                     return;
                 }
@@ -28,10 +28,10 @@ export function run(feature: Feature) {
     return errors;
 }
 
-function createError(step) {
+function createError(step: Step) {
     return {
         message: `Step "${step.keyword}${step.text}" should use And instead of ${step.keyword}`,
         rule: name,
-        line: step.location.line,
+        line: step.location?.line,
     };
 }
