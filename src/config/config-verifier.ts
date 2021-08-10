@@ -1,5 +1,5 @@
 import * as rules from "../utils/rules";
-import { ConfigType } from "../types/config";
+import { ConfigType } from "../types";
 
 export function verifyConfigurationFile(config: Partial<ConfigType>, additionalRulesDirs?: string[]): string[] {
     let errors: string[] = [];

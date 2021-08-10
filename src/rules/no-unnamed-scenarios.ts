@@ -1,5 +1,4 @@
-import { ResultError } from "../types/result";
-import { Feature } from "../types/cucumber";
+import { Feature, ResultError } from "../types";
 
 export const name = "no-unnamed-scenarios";
 
@@ -13,7 +12,7 @@ export function run(feature: Feature) {
             errors.push({
                 message: "Missing Scenario name",
                 rule: name,
-                line: child.scenario.location?.line,
+                line: child.scenario.location?.line || -1,
             });
         }
     });

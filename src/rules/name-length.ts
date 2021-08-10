@@ -1,5 +1,4 @@
-import { ResultError } from "../types/result";
-import { Background, Feature, Scenario } from "../types/cucumber";
+import { Background, Feature, ResultError, Scenario } from "../types";
 
 const _ = require("lodash");
 

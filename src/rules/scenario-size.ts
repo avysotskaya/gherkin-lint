@@ -1,5 +1,4 @@
-import { ResultError } from "../types/result";
-import { Feature } from "../types/cucumber";
+import { Feature, ResultError } from "../types";
 import * as gherkinUtils from "./utils/gherkin";
 
 const _ = require("lodash");
@@ -33,7 +32,7 @@ export function run(feature: Feature, unused, configuration) {
                     // @ts-ignore
                     message: `Element ${nodeType} too long: actual ${node.steps.length}, expected ${maxSize}`,
                     rule: name,
-                    line: node?.location?.line,
+                    line: node.location?.line || -1,
                 });
             }
         }

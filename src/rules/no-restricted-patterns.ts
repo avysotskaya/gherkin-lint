@@ -1,5 +1,4 @@
-import { ResultError } from "../types/result";
-import { Feature } from "../types/cucumber";
+import { Feature, ResultError } from "../types";
 import * as gherkinUtils from "./utils/gherkin";
 
 export const name = "no-restricted-patterns";
@@ -73,13 +72,13 @@ function check(node, property, pattern, language, errors) {
     let strings = [node[property]];
     const type = gherkinUtils.getNodeType(node, language);
     if (property === "description") {
-    // Descriptions can be multiline, in which case the description will contain escaped
-    // newline characters "\n". If a multiline description matches one of the restricted patterns
-    // when the error message gets printed in the console, it will break the message into multiple lines.
-    // So let's split the description on newline chars and test each line separately.
-    // To make sure we don't accidentally pick up a doubly escaped new line "\\n" which would appear
-    // if a user wrote the string "\n" in a description, let's replace all escaped new lines
-    // with a sentinel, split lines and then restore the doubly escaped new line
+        // Descriptions can be multiline, in which case the description will contain escaped
+        // newline characters "\n". If a multiline description matches one of the restricted patterns
+        // when the error message gets printed in the console, it will break the message into multiple lines.
+        // So let's split the description on newline chars and test each line separately.
+        // To make sure we don't accidentally pick up a doubly escaped new line "\\n" which would appear
+        // if a user wrote the string "\n" in a description, let's replace all escaped new lines
+        // with a sentinel, split lines and then restore the doubly escaped new line
         const escapedNewLineSentinel = "<!gherkin-lint new line sentinel!>";
         const escapedNewLine = "\\n";
         strings = node[property]
@@ -88,8 +87,8 @@ function check(node, property, pattern, language, errors) {
             .map(string => string.replace(escapedNewLineSentinel, escapedNewLine));
     }
     strings.forEach(item => {
-    // We use trim() on the examined string because names and descriptions can contain
-    // white space before and after, unlike steps
+        // We use trim() on the examined string because names and descriptions can contain
+        // white space before and after, unlike steps
         if (item.trim().match(pattern)) {
             errors.push({
                 message: `${type} ${property}: "${item.trim()}" matches restricted pattern "${pattern}"`,

@@ -1,5 +1,4 @@
-import { ResultError } from "../types/result";
-import { File } from "../types/linter";
+import { File, ResultError } from "../types";
 
 export const name = "no-trailing-spaces";
 

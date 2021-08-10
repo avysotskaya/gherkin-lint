@@ -3,6 +3,7 @@ import { getArgumentsParsed } from "./utils/argsParser";
 import { getFeatureFiles } from "./utils/feature-finder";
 import { getConfiguration } from "./config/config-parser";
 import { isErrorInResults, lint } from "./linter";
+import { Format } from "./types";
 
 async function run() {
     const _a = getArgumentsParsed();
@@ -15,16 +16,18 @@ async function run() {
     process.exit(isErrorInResults(results) ? 1 : 0);
 }
 
-function getFormatter(format) {
-    if (format === "json") {
+function getFormatter(format: Format) {
+    switch (format) {
+    case "json":
         return import("./formatters/json");
-    } else if (format === "xunit") {
+    case "xunit":
         return import("./formatters/xunit");
-    } else if (!format || format === "stylish") {
+    case "stylish":
         return import("./formatters/stylish");
-    } else {
+    default:
         logger.boldError("Unsupported format. The supported formats are json, xunit and stylish.");
         process.exit(1);
+        break;
     }
 }
 

@@ -1,5 +1,4 @@
-import { ResultError } from "../types/result";
-import { Feature } from "../types/cucumber";
+import { Feature, ResultError } from "../types";
 import * as gherkinUtils from "./utils/gherkin";
 
 export const name = "no-examples-in-scenarios";
@@ -16,7 +15,7 @@ export function run(feature: Feature) {
                 errors.push({
                     message: 'Cannot use "Examples" in a "Scenario", use a "Scenario Outline" instead',
                     rule: name,
-                    line: child.scenario.location?.line,
+                    line: child.scenario.location?.line || -1,
                 });
             }
         }

@@ -1,5 +1,4 @@
-import { ResultError } from "../types/result";
-import { Feature, Step } from "../types/cucumber";
+import { Feature, ResultError, Step } from "../types";
 import * as gherkinUtils from "./utils/gherkin";
 
 export const name = "use-and";
@@ -32,6 +31,6 @@ function createError(step: Step) {
     return {
         message: `Step "${step.keyword}${step.text}" should use And instead of ${step.keyword}`,
         rule: name,
-        line: step.location?.line,
+        line: step.location?.line || -1,
     };
 }

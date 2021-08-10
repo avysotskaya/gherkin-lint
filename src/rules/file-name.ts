@@ -1,4 +1,4 @@
-import { Feature } from "../types/cucumber";
+import { Feature } from "../types";
 
 const path = require("path");
 const _ = require("lodash");

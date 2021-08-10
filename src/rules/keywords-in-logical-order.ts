@@ -1,6 +1,5 @@
-import { ResultError } from "../types/result";
+import { Feature, ResultError, Step } from "../types";
 import * as gherkinUtils from "./utils/gherkin";
-import { Feature, Step } from "../types/cucumber";
 
 export const name = "keywords-in-logical-order";
 
@@ -38,6 +37,6 @@ function createError(step: Step, maxKeyword: string) {
     return {
         message: `Step "${step.keyword}${step.text}" should not appear after step using keyword ${maxKeyword}`,
         rule: name,
-        line: step.location?.line,
+        line: step.location?.line || -1,
     };
 }

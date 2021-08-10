@@ -1,4 +1,4 @@
-import { ResultError } from "../types/result";
+import { ResultError } from "../types";
 
 export const name = "no-multiple-empty-lines";
 

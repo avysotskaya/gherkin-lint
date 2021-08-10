@@ -1,5 +1,4 @@
-import { ResultError } from "../types/result";
-import { Examples, Feature, Scenario, Tag } from "../types/cucumber";
+import { Examples, Feature, ResultError, Scenario, Tag } from "../types";
 
 const _ = require("lodash");
 

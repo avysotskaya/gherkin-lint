@@ -1,22 +1,22 @@
 import chalk from "chalk";
-import { Result } from "../types/result";
+import { Result, ResultError } from "../types";
 
 const style = {
-    gray: function (text) {
+    gray: function (text: string) {
         return chalk.gray(text);
     },
-    underline: function (text) {
+    underline: function (text: string) {
         return chalk.underline(text);
     },
 };
 
-function stylizeFilePath(filePath) {
+function stylizeFilePath(filePath: string) {
     return style.underline(filePath);
 }
 
-function stylizeError(error, maxLineLength, maxMessageLength, addColors) {
+function stylizeError(error: ResultError, maxLineLength: number, maxMessageLength: number, addColors: boolean) {
     const indent = "  "; // indent 2 spaces so it looks pretty
-    const errorLinePadded = error.line.toString().padEnd(maxLineLength);
+    const errorLinePadded = error.line?.toString().padEnd(maxLineLength);
     const errorLineStylized = addColors ? style.gray(errorLinePadded) : errorLinePadded;
     const errorRuleStylized = addColors ? style.gray(error.rule) : error.rule;
     return indent + errorLineStylized + indent + chalk.red("error") + indent + error.message.padEnd(maxMessageLength)

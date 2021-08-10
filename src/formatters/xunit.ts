@@ -1,9 +1,11 @@
-export function printResults(results) {
+import { Result } from "../types";
+
+export function printResults(results: Result[]) {
     const testCases = results.map(result => ({
         _attributes: {
             name: result.filePath,
         },
-        error: result.errors.map(error => ({
+        error: result.errors?.map(error => ({
             _attributes: {
                 message: error.message,
                 type: "gherkin-lint-error",

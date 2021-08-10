@@ -1,6 +1,5 @@
 import * as gherkinUtils from "./utils/gherkin";
-import { ResultError } from "../types/result";
-import { Feature, Step, Tag } from "../types/cucumber";
+import { Feature, ResultError, Step, Tag } from "../types";
 
 const _ = require("lodash");
 

@@ -1,5 +1,4 @@
-import { ResultError } from "../types/result";
-import { Feature } from "../types/cucumber";
+import { Feature, ResultError } from "../types";
 import * as gherkinUtils from "./utils/gherkin";
 
 const _ = require("lodash");
@@ -20,7 +19,7 @@ export function run(feature: Feature) {
                 errors.push({
                     message: "Scenario Outline does not have any Examples",
                     rule: name,
-                    line: scenario.location?.line,
+                    line: scenario.location?.line || -1,
                 });
             }
         }

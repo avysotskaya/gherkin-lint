@@ -1,4 +1,4 @@
-import { ResultError } from "../types/result";
+import { ResultError } from "../types";
 import * as logger from "../utils/logger";
 
 const _ = require("lodash");

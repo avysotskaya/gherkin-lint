@@ -1,8 +1,5 @@
 // Operations on rules
-import { ResultError } from "../types/result";
-import { Rules } from "../types/config";
-import { Feature } from "../types/cucumber";
-import { File } from "../types/linter";
+import { Feature, File, ResultError, Rules } from "../types";
 
 const glob = require("glob");
 const path = require("path");

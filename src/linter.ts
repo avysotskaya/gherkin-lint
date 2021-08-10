@@ -1,8 +1,5 @@
 import * as logger from "./utils/logger";
-import { FatalError, Result, ResultError } from "./types/result";
-import { Envelope, Feature } from "./types/cucumber";
-import { ConfigType } from "./types/config";
-import { File } from "./types/linter";
+import { ConfigType, Envelope, FatalError, Feature, File, Result, ResultError } from "./types";
 import { runAllEnabledRules } from "./utils/rules";
 
 const _ = require("lodash");

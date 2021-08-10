@@ -1,5 +1,4 @@
-import { ResultError } from "../types/result";
-import { Feature, Tag } from "../types/cucumber";
+import { Feature, ResultError, Tag } from "../types";
 import * as gherkinUtils from "./utils/gherkin";
 
 const _ = require("lodash");
@@ -20,7 +19,7 @@ export function run(feature: Feature, unused, configuration) {
     let errors: ResultError[] = [];
     checkTags(feature, language, forbiddenTags, forbiddenPatterns, errors);
     feature.children?.forEach(child => {
-    // backgrounds don't have tags
+        // backgrounds don't have tags
         if (child.scenario) {
             checkTags(child.scenario, language, forbiddenTags, forbiddenPatterns, errors);
             child.scenario.examples?.forEach(example => {

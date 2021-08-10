@@ -1,5 +1,5 @@
 export type ResultError = {
-    line: number | string | undefined | null;
+    line: number;
     message: string;
     rule: string;
 };

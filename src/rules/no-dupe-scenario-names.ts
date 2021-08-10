@@ -1,6 +1,4 @@
-import { ResultError } from "../types/result";
-import { Feature } from "../types/cucumber";
-import { File } from "../types/linter";
+import { Feature, File, ResultError } from "../types";
 
 export const name = "no-dupe-scenario-names";
 export const availableConfigs = [
@@ -28,7 +26,7 @@ export function run(feature: Feature, file: File, configuration) {
                 errors.push({
                     message: `Scenario name is already used in: ${dupes}`,
                     rule: name,
-                    line: child.scenario.location?.line,
+                    line: child.scenario.location?.line || -1,
                 });
             } else {
                 scenarios[child.scenario.name] = {

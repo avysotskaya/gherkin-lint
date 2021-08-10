@@ -1,5 +1,4 @@
-import { ResultError } from "../types/result";
-import { Examples, Feature, Scenario } from "../types/cucumber";
+import { Examples, Feature, ResultError, Scenario } from "../types";
 
 const _ = require("lodash");
 
@@ -32,7 +31,7 @@ function verifyTags(node: Feature | Scenario | Examples, errors: ResultError[]) 
                     errors.push({
                         message: `Duplicate tags are not allowed: ${tag.name}`,
                         rule: name,
-                        line: tag.location?.line,
+                        line: tag.location?.line || -1,
                     });
                     failedTagNames.push(tag.name);
                 } else {

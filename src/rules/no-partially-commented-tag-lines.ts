@@ -1,5 +1,4 @@
-import { ResultError } from "../types/result";
-import { Examples, Feature, Scenario } from "../types/cucumber";
+import { Examples, Feature, ResultError, Scenario } from "../types";
 
 export const name = "no-partially-commented-tag-lines";
 
@@ -26,7 +25,7 @@ function checkTags(node: Feature | Scenario | Examples, errors: ResultError[]) {
             errors.push({
                 message: "Partially commented tag lines not allowed",
                 rule: name,
-                line: tag.location?.line,
+                line: tag.location?.line || -1,
             });
         }
     });

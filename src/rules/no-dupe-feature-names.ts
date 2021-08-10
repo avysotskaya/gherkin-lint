@@ -1,6 +1,4 @@
-import { ResultError } from "../types/result";
-import { Feature } from "../types/cucumber";
-import { File } from "../types/linter";
+import { Feature, File, ResultError } from "../types";
 
 export const name = "no-dupe-feature-names";
 const features = [];
@@ -17,7 +15,7 @@ export function run(feature: Feature, file: File) {
             errors.push({
                 message: `Feature name is already used in: ${dupes}`,
                 rule: name,
-                line: feature.location?.line,
+                line: feature.location?.line || -1,
             });
         } else {
             features[feature.name] = { files: [file.relativePath] };
