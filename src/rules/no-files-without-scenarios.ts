@@ -7,7 +7,7 @@ export function run(feature: Feature) {
         return [];
     }
     let errors: ResultError[] = [];
-    if (!feature.children?.some(children => children.scenario)) {
+    if (!feature.children?.some(child => child.scenario || child.rule?.children?.some(ruleChild => ruleChild.scenario))) {
         errors.push({
             message: "Feature file does not have any Scenarios",
             rule: name,

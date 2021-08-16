@@ -10,8 +10,16 @@ describe("No Files Without Scenarios Rule", function () {
     it("doesn't raise errors when there is a scenario outline in a file", function () {
         return runTest("no-files-without-scenarios/FeatureWithScenarioOutline.feature", {}, []);
     });
+    it("doesn't raise errors when there is a rule with example (scenario) in a file", function () {
+        return runTest("no-files-without-scenarios/FeatureWithRule.feature", {}, []);
+    });
     it("raises an error an error for features without scenarios and scenario outlines", function () {
         return runTest("no-files-without-scenarios/Violations.feature", {}, [
+            { messageElements: {}, line: 1 },
+        ]);
+    });
+    it("raises an error an error for features without examples (scenarios) in Rule", function () {
+        return runTest("no-files-without-scenarios/FeatureWithRuleViolations.feature", {}, [
             { messageElements: {}, line: 1 },
         ]);
     });
