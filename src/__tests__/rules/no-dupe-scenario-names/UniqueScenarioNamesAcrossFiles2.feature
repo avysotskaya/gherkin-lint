@@ -11,3 +11,7 @@ Scenario Outline: This is a Scenario Outline with a very unique name across file
 Examples:
   | foo |
   | bar |
+
+Rule: This is a Rule
+
+Example: This is a Rule Example with a very unique name across files

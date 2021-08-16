@@ -1,4 +1,4 @@
-import { Feature, File, ResultError } from "../types";
+import { Feature, File, ResultError, Scenario } from "../types";
 
 export const name = "no-dupe-scenario-names";
 export const availableConfigs = [
@@ -16,31 +16,41 @@ export function run(feature: Feature, file: File, configuration) {
         scenarios = [];
     }
     feature.children?.forEach(child => {
-        if (child.scenario && child.scenario.name) {
-            if (child.scenario.name in scenarios) {
-                const dupes = getFileLinePairsAsStr(scenarios[child.scenario.name].locations);
-                scenarios[child.scenario.name].locations.push({
-                    file: file.relativePath,
-                    line: child.scenario.location?.line,
-                });
-                errors.push({
-                    message: `Scenario name is already used in: ${dupes}`,
-                    rule: name,
-                    line: child.scenario.location?.line || -1,
-                });
-            } else {
-                scenarios[child.scenario.name] = {
-                    locations: [
-                        {
-                            file: file.relativePath,
-                            line: child.scenario.location?.line,
-                        },
-                    ],
-                };
-            }
+        if (child.rule) {
+            child.rule.children?.filter(it => it.scenario)
+                .forEach(ruleChild => checkScenario(ruleChild.scenario!, file, errors));
+        }
+        if (child.scenario) {
+            checkScenario(child.scenario, file, errors);
         }
     });
     return errors;
+}
+
+function checkScenario(scenario: Scenario, file: File, errors: ResultError[]) {
+    if (scenario.name) {
+        if (scenario.name in scenarios) {
+            const dupes = getFileLinePairsAsStr(scenarios[scenario.name].locations);
+            scenarios[scenario.name].locations.push({
+                file: file.relativePath,
+                line: scenario.location?.line,
+            });
+            errors.push({
+                message: `Scenario name is already used in: ${dupes}`,
+                rule: name,
+                line: scenario.location?.line || -1,
+            });
+        } else {
+            scenarios[scenario.name] = {
+                locations: [
+                    {
+                        file: file.relativePath,
+                        line: scenario.location?.line,
+                    },
+                ],
+            };
+        }
+    }
 }
 
 function getFileLinePairsAsStr(objects) {

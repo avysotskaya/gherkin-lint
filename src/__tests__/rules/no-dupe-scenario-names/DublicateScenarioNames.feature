@@ -11,3 +11,7 @@ Scenario Outline: This is a non unique name
 Examples:
   | foo |
   | bar |
+
+Rule: This is a rule
+
+Example: This is a non unique name
