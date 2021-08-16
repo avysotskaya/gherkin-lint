@@ -35,3 +35,16 @@ Scenario Outline: This is a Scenario Outline
 Examples:
   | foo |
   | bar |
+
+Rule: No violations in Rule
+
+Example: This is an Example
+  Given step15
+  And step16
+  And step17
+  When step18
+  And step19
+  And step20
+  Then step21
+  And step22
+  And step23

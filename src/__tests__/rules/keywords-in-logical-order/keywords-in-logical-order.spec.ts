@@ -3,7 +3,6 @@ import * as rule from "../../../rules/keywords-in-logical-order";
 
 const runTest = createRuleTest(rule,
     'Step "<%= keyword %> <%= text %>" should not appear after step using keyword <%= priorKeyword %>');
-
 describe("Keywords in logical order", function () {
     it("doesn't raise errors when there are no violations", function () {
         return runTest("keywords-in-logical-order/NoViolations.feature", {}, []);
@@ -41,6 +40,35 @@ describe("Keywords in logical order", function () {
             {
                 messageElements: { keyword: "Given", text: "step43", priorKeyword: "then" },
                 line: 29,
+            },
+        ]);
+    });
+    it("raises errors when there are violations in Rule", function () {
+        return runTest("keywords-in-logical-order/ViolationsInRule.feature", {}, [
+            {
+                line: 7,
+                messageElements: { keyword: "Given", text: "step7", priorKeyword: "when" },
+
+            },
+            {
+                line: 11,
+                messageElements: { keyword: "Given", text: "step11", priorKeyword: "then" },
+            },
+            {
+                line: 15,
+                messageElements: { keyword: "When", text: "step15", priorKeyword: "then" },
+            },
+            {
+                line: 21,
+                messageElements: { keyword: "When", text: "step21", priorKeyword: "then" },
+            },
+            {
+                line: 25,
+                messageElements: { keyword: "When", text: "step25", priorKeyword: "then" },
+            },
+            {
+                line:26,
+                messageElements: { keyword: "Given", text: "step26", priorKeyword: "then" },
             },
         ]);
     });
