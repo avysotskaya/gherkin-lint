@@ -17,6 +17,10 @@
     "typescript",
     "linter"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/avysotskaya/gherkin-lint.git"
+  },
   "dependencies": {
     "@types/glob": "7.1.4",
     "@types/lodash": "4.14.172",

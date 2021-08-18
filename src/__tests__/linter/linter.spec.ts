@@ -16,7 +16,7 @@ describe("Linter", function () {
         const expected = [{
             "message": 'Multiple "Background" definitions in the same file are disallowed',
             "rule": "up-to-one-background-per-file",
-            "line": "9",
+            "line": 9,
         }];
         return linterTest(feature, expected);
     });
@@ -25,7 +25,7 @@ describe("Linter", function () {
         const expected = [{
             "message": "Tags on Backgrounds are disallowed",
             "rule": "no-tags-on-backgrounds",
-            "line": "4",
+            "line": 4,
         }];
         return linterTest(feature, expected);
     });
@@ -34,7 +34,7 @@ describe("Linter", function () {
         const expected = [{
             "message": 'Multiple "Feature" definitions in the same file are disallowed',
             "rule": "one-feature-per-file",
-            "line": "7",
+            "line": 7,
         }];
         return linterTest(feature, expected);
     });
@@ -43,7 +43,7 @@ describe("Linter", function () {
         const expected = [{
             "message": 'Steps should begin with "Given", "When", "Then", "And" or "But". Multiline steps are disallowed',
             "rule": "no-multiline-steps",
-            "line": "9",
+            "line": 9,
         }];
         return linterTest(feature, expected);
     });
@@ -52,7 +52,7 @@ describe("Linter", function () {
         const expected = [{
             "message": 'Steps should begin with "Given", "When", "Then", "And" or "But". Multiline steps are disallowed',
             "rule": "no-multiline-steps",
-            "line": "5",
+            "line": 5,
         }];
         return linterTest(feature, expected);
     });
@@ -61,7 +61,7 @@ describe("Linter", function () {
         const expected = [{
             "message": 'Steps should begin with "Given", "When", "Then", "And" or "But". Multiline steps are disallowed',
             "rule": "no-multiline-steps",
-            "line": "9",
+            "line": 9,
         }];
         return linterTest(feature, expected);
     });
@@ -71,12 +71,12 @@ describe("Linter", function () {
             {
                 message: 'Steps should begin with "Given", "When", "Then", "And" or "But". Multiline steps are disallowed',
                 rule: "no-multiline-steps",
-                line: "13",
+                line: 13,
             },
             {
                 message: "Tags on Backgrounds are disallowed",
                 rule: "no-tags-on-backgrounds",
-                line: "4",
+                line: 4,
             },
         ];
         linter.lint([feature])

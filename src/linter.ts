@@ -100,7 +100,7 @@ function getFormattedTaggedBackgroundError(errors: FatalError[]) {
         errorMsgs.push({
             message: "Tags on Backgrounds are disallowed",
             rule: "no-tags-on-backgrounds",
-            line: errors[0].data.match(/\((\d+):.*/)[1],
+            line: parseInt(errors[0].data.match(/\((\d+):.*/)[1]),
         });
         index = 2;
         for (let i = 2; i < errors.length; i++) {
@@ -116,9 +116,9 @@ function getFormattedTaggedBackgroundError(errors: FatalError[]) {
 
 /*eslint no-console: "off"*/
 function getFormattedFatalError(error: FatalError): ResultError {
-    const errorLine = error.data.match(/\((\d+):.*/)[1];
-    let errorMsg;
-    let rule;
+    const errorLine = parseInt(error.data.match(/\((\d+):.*/)[1]);
+    let errorMsg: string;
+    let rule: string;
     if (error.data.includes("got 'Background")) {
         errorMsg = 'Multiple "Background" definitions in the same file are disallowed';
         rule = "up-to-one-background-per-file";
