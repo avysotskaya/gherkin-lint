@@ -14,7 +14,7 @@ The changes are:
 
 ## Installation
 ```
-npm install gherkin-lint
+npm install gherkin-lint-ts
 ```
 
 ## Demo
