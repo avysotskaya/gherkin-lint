@@ -24,7 +24,7 @@ git clone https://github.com/avysotskaya/gherkin-lint.git
 yarn demo
 ```
 Or check this:
-![console](![image](https://user-images.githubusercontent.com/40882775/130044987-23bf6f6c-2b24-4d15-b54a-a11df78a8091.png))
+![console](https://user-images.githubusercontent.com/40882775/130044987-23bf6f6c-2b24-4d15-b54a-a11df78a8091.png)
 
 
 ## Available rules
