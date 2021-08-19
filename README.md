@@ -1,11 +1,16 @@
 # Gherkin lint
-[![Travis](https://travis-ci.com/vsiakka/gherkin-lint.svg?branch=master)](https://travis-ci.com/github/vsiakka/gherkin-lint/branches)
-[![Coverage Status](https://coveralls.io/repos/github/vsiakka/gherkin-lint/badge.svg?branch=master)](https://coveralls.io/github/vsiakka/gherkin-lint?branch=master)
-[![David](https://img.shields.io/david/vsiakka/gherkin-lint.svg?maxAge=2592000)](https://david-dm.org/vsiakka/gherkin-lint)
-[![David](https://img.shields.io/david/dev/vsiakka/gherkin-lint.svg?maxAge=2592000)](https://david-dm.org/vsiakka/gherkin-lint#info=devDependencies&view=table)
-[![npm](https://img.shields.io/npm/v/gherkin-lint.svg?maxAge=2592000)](https://www.npmjs.com/package/gherkin-lint)
-
 Uses [Gherkin](https://github.com/cucumber/gherkin-javascript) to parse feature files and runs linting against the default rules, and the optional rules you specified in your `.gherkin-lintrc` file.
+
+Original idea come from this project:
+
+https://github.com/vsiakka/gherkin-lint
+
+The changes are:
+
+- The project has been rewritten to Typescript
+- Adds support for writing your own rules in Typescript
+- Error output was changed from console to process.stdout, to have ability `yarn --silent lint:features > features-errors.log`
+- A couple more changes that will be described as soon as the project is finally stabilized
 
 ## Installation
 ```
@@ -15,11 +20,11 @@ npm install gherkin-lint
 ## Demo
 To see the output for all the errors that the linter can detect run:
 ```
-git clone https://github.com/vsiakka/gherkin-lint.git
-npm run demo
+git clone https://github.com/avysotskaya/gherkin-lint.git
+yarn demo
 ```
 Or check this:
-![console](https://i.imgur.com/Qfp1FQR.png)
+![console](![image](https://user-images.githubusercontent.com/40882775/130044987-23bf6f6c-2b24-4d15-b54a-a11df78a8091.png))
 
 
 ## Available rules
@@ -107,7 +112,7 @@ The list of supported styles is:
 
 ### no-restricted-patterns
 
-`no-restricted-patterns` is a list of exact or partial patterns whose matches are disallowed in feature name and description, and in background, scenario and scenario outline name, description and steps.
+`no-restricted-patterns` is a list of exact or partial patterns whose matches are dissallowed in feature name and description, and in background, scenario and scenario outline name, description and steps.
 All patterns are treated as case insensitive.
 The rule can be configured like this:
 ```
@@ -289,11 +294,11 @@ There are 2 ways you can specify files that the linter should ignore:
 
 
 ## Custom rules
-You can specify one more more custom rules directories by using the `-r` or `--rulesdir` command line option. Rules in the given directories will be available additionally to the default rules.
+You can specify one more more custom rules directories by using the `-d` or `--dirs` command line option. Rules in the given directories will be available additionally to the default rules.
 
 Example:
 ```
-gherkin-lint --rulesdir "/path/to/my/rulesdir" --rulesdir "from/cwd/rulesdir"
+gherkin-lint -d "/path/to/my/rulesdir" "from/cwd/rulesdir"
 ```
 
 Paths can either be absolute or relative to the current working directory.
