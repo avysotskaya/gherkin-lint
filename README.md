@@ -1,3 +1,6 @@
+
+
+[![Travis](https://travis-ci.com/avysotskaya/gherkin-lint.svg?branch=master)](https://travis-ci.com/github/avysotskaya/gherkin-lint/branches)
 [![Coverage Status](https://coveralls.io/repos/github/avysotskaya/gherkin-lint/badge.svg?branch=master)](https://coveralls.io/github/avysotskaya/gherkin-lint?branch=master)
 
 # Gherkin lint
