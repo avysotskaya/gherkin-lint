@@ -58,6 +58,9 @@
     "sinon": "9.0.1",
     "typescript": "4.1.5"
   },
+  "peerDependencies": {
+    "@babel/core": "^7.0.0-0"
+  },
   "scripts": {
     "clean": "rimraf lib",
     "compile": "tsc --build tsconfig.prod.json",

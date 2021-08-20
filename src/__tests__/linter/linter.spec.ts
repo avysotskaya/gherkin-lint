@@ -69,14 +69,14 @@ describe("Linter", function () {
         const feature = path.join(__dirname, "MultipleViolations.feature");
         const expected = [
             {
-                message: 'Steps should begin with "Given", "When", "Then", "And" or "But". Multiline steps are disallowed',
-                rule: "no-multiline-steps",
-                line: 13,
-            },
-            {
                 message: "Tags on Backgrounds are disallowed",
                 rule: "no-tags-on-backgrounds",
                 line: 4,
+            },
+            {
+                message: 'Steps should begin with "Given", "When", "Then", "And" or "But". Multiline steps are disallowed',
+                rule: "no-multiline-steps",
+                line: 13,
             },
         ];
         linter.lint([feature])
