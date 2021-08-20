@@ -35,3 +35,16 @@ Scenario Outline: This is a Scenario Outline
 Examples:
   | foo |
   | bar |
+
+Rule: This is a Rule
+
+Example: This is an Example
+    Given step42
+    And step43
+    And step44
+    When step45
+    And step46
+    And step47
+    Then step48
+    And step49
+    And step50

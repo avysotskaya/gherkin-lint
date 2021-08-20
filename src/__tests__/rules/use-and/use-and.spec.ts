@@ -8,7 +8,7 @@ describe("Use And Rule", function () {
     it("doesn't raise errors when there are no violations", function () {
         return runTest("use-and/NoViolations.feature", {}, []);
     });
-    it("raises erros when there are violations", function () {
+    it("raises errors when there are violations", function () {
         return runTest("use-and/Violations.feature", {}, [
             {
                 messageElements: { keyword: "Given ", text: "step5" },
@@ -45,6 +45,18 @@ describe("Use And Rule", function () {
             {
                 messageElements: { keyword: "Then ", text: "step33" },
                 line: 33,
+            },
+            {
+                messageElements: { keyword: "Given ", text: "step43" },
+                line: 43,
+            },
+            {
+                messageElements: { keyword: "When ", text: "step46" },
+                line: 46,
+            },
+            {
+                messageElements: { keyword: "Then ", text: "step49" },
+                line: 49,
             },
         ]);
     });
