@@ -1,3 +1,5 @@
+[![Coverage Status](https://coveralls.io/repos/github/avysotskaya/gherkin-lint/badge.svg?branch=master)](https://coveralls.io/github/avysotskaya/gherkin-lint?branch=master)
+
 # Gherkin lint
 Uses [Gherkin](https://github.com/cucumber/gherkin-javascript) to parse feature files and runs linting against the default rules, and the optional rules you specified in your `.gherkin-lintrc` file.
 
