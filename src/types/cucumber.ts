@@ -1,5 +1,6 @@
 import { messages } from "cucumber-messages";
 
+export type Rule = messages.GherkinDocument.Feature.FeatureChild.IRule
 export type Background = messages.GherkinDocument.Feature.IBackground;
 export type Examples = messages.GherkinDocument.Feature.Scenario.IExamples;
 export type Feature = messages.GherkinDocument.IFeature;

@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "Gherkin features linter written in Typescript",
   "main": "lib/src/index.js",
+  "bin": {
+    "gherkin-lint-ts": "lib/src/index.js"
+  },
   "files": [
     "lib"
   ],
@@ -54,9 +57,6 @@
     "nyc": "15.1.0",
     "sinon": "9.0.1",
     "typescript": "4.1.5"
-  },
-  "bin": {
-    "gherkin-lint-ts": "lib/src/index.js"
   },
   "scripts": {
     "clean": "rimraf lib",

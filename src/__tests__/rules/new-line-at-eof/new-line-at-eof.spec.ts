@@ -21,7 +21,7 @@ describe("New Line at EOF Rule", function () {
         });
         it("raises an error if invalid configuration is used", function () {
             const featureStub = undefined; // not used by the rule
-            const fileStub = { name: "foo.feature", lines: [] };
+            const fileStub = { relativePath: "foo.feature", lines: [] };
             const invalidConfiguration = ["on", "k"];
             rule.run(featureStub, fileStub, invalidConfiguration);
             // @ts-ignore

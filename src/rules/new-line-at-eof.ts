@@ -1,4 +1,4 @@
-import { ResultError } from "../types";
+import { File, ResultError } from "../types";
 import * as logger from "../utils/logger";
 
 const _ = require("lodash");
@@ -9,7 +9,7 @@ export const availableConfigs = [
     "no",
 ];
 
-export function run(unused, file, configuration) {
+export function run(unused, file: File, configuration) {
     let errors: ResultError[] = [];
     if (_.indexOf(availableConfigs, configuration) === -1) {
         logger.boldError(`${name} requires an extra configuration value.\nAvailable configurations: ${availableConfigs.join(

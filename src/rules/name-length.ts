@@ -11,23 +11,6 @@ export const availableConfigs = {
 };
 let errors: ResultError[] = [];
 
-function test(nameString, location, configuration, type) {
-    if (nameString && (nameString.length > configuration[type])) {
-        errors.push({
-            message: `${type} name is too long. Length of ${nameString.length} is longer than the maximum allowed: ${configuration[type]}`,
-            rule: name,
-            line: location.line,
-        });
-    }
-}
-
-function testSteps(node: Background | Scenario, mergedConfiguration: any) {
-    node.steps?.forEach(step => {
-        // Check Step name length
-        test(step.text, step.location, mergedConfiguration, "Step");
-    });
-}
-
 export function run(feature: Feature, unused, configuration) {
     if (!feature) {
         return [];
@@ -47,4 +30,21 @@ export function run(feature: Feature, unused, configuration) {
         }
     });
     return errors;
+}
+
+function test(nameString, location, configuration, type) {
+    if (nameString && (nameString.length > configuration[type])) {
+        errors.push({
+            message: `${type} name is too long. Length of ${nameString.length} is longer than the maximum allowed: ${configuration[type]}`,
+            rule: name,
+            line: location.line,
+        });
+    }
+}
+
+function testSteps(node: Background | Scenario, mergedConfiguration: any) {
+    node.steps?.forEach(step => {
+        // Check Step name length
+        test(step.text, step.location, mergedConfiguration, "Step");
+    });
 }

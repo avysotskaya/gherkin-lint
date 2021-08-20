@@ -1,5 +1,4 @@
 src
-test
-test-data-wip
+demo
 coverage
 .nyc_output

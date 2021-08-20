@@ -1,4 +1,4 @@
-import { Feature, ResultError } from "../types";
+import { Background, Feature, ResultError, Scenario } from "../types";
 import * as gherkinUtils from "./utils/gherkin";
 
 const _ = require("lodash");
@@ -26,16 +26,30 @@ export function run(feature: Feature, unused, configuration) {
             const nodeType = gherkinUtils.getNodeType(node, feature.language);
             const configKey = child.rule ? "Rule" : child.background ? "Background" : "Scenario";
             const maxSize = configuration["steps-length"][configKey];
-            // @ts-ignore
-            if (maxSize && node.steps.length > maxSize) {
-                errors.push({
-                    // @ts-ignore
-                    message: `Element ${nodeType} too long: actual ${node.steps.length}, expected ${maxSize}`,
-                    rule: name,
-                    line: node.location?.line || -1,
-                });
+            if (maxSize) {
+                if (child.rule) {
+                    child.rule.children?.forEach(ruleChild => {
+                        const ruleNode = ruleChild.background || ruleChild.scenario;
+                        if (ruleNode) {
+                            checkSteps(ruleNode, maxSize, errors, nodeType);
+                        }
+                    });
+                } else {
+                    checkSteps(node, maxSize, errors, nodeType);
+                }
             }
         }
     });
     return errors;
+}
+
+function checkSteps(node: Background | Scenario, maxSize: number, errors: ResultError[], nodeType: string) {
+    let length = node.steps?.length || -1;
+    if (length > maxSize) {
+        errors.push({
+            message: `Element ${nodeType} too long: actual ${length}, expected ${maxSize}`,
+            rule: name,
+            line: node.location?.line || -1,
+        });
+    }
 }

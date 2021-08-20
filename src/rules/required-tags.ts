@@ -1,4 +1,4 @@
-import { Feature, ResultError } from "../types";
+import { Feature, ResultError, Tag } from "../types";
 import * as gherkinUtils from "./utils/gherkin";
 
 const _ = require("lodash");
@@ -9,19 +9,6 @@ export const availableConfigs = {
     ignoreUntagged: true,
 };
 
-function checkTagExists(requiredTag, ignoreUntagged, scenarioTags, scenarioType, scenarioLine) {
-    const result = (ignoreUntagged && scenarioTags.length === 0)
-        || scenarioTags.some((tagObj) => RegExp(requiredTag).test(tagObj.name));
-    if (!result) {
-        return {
-            message: `No tag found matching ${requiredTag} for ${scenarioType}`,
-            rule: name,
-            line: scenarioLine,
-        };
-    }
-    return result;
-}
-
 export function run(feature: Feature, unused, config) {
     if (!feature) {
         return [];
@@ -31,20 +18,28 @@ export function run(feature: Feature, unused, config) {
     feature.children?.forEach((child) => {
         if (child.scenario) {
             const type = gherkinUtils.getNodeType(child.scenario, feature.language);
-            const line = child.scenario.location?.line;
+            const line = child.scenario.location?.line || -1;
+            const scenarioTags = child.scenario?.tags || [];
             // Check each Scenario for the required tags
-            const requiredTagErrors = mergedConfig.tags
-                .map((requiredTag) => checkTagExists(requiredTag,
-                    mergedConfig.ignoreUntagged,
-                    child.scenario?.tags || [],
-                    type,
-                    line))
-                .filter((item) =>
-                    typeof item === "object" && item.message
-                );
-            // Update errors
-            errors = errors.concat(requiredTagErrors);
+            mergedConfig.tags.forEach(tag => {
+                if (!checkTagExists(tag, mergedConfig.ignoreUntagged, scenarioTags)) {
+                    errors.push(createError(tag, type, line));
+                }
+            });
         }
     });
     return errors;
+}
+
+function checkTagExists(requiredTag: string, ignoreUntagged: boolean, scenarioTags: Tag[]): boolean {
+    return (ignoreUntagged && scenarioTags.length === 0)
+        || scenarioTags.some((tagObj) => RegExp(requiredTag).test(tagObj.name || ""));
+}
+
+function createError(requiredTag: string, scenarioType: string, scenarioLine: number) {
+    return {
+        message: `No tag found matching ${requiredTag} for ${scenarioType}`,
+        rule: name,
+        line: scenarioLine,
+    };
 }
