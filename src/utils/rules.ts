@@ -1,5 +1,5 @@
 // Operations on rules
-import { Feature, File, ResultError, Rules } from "../types";
+import { Feature, File, ErrorLevel, ResultError, Rules } from "../types";
 
 const glob = require("glob");
 const path = require("path");
@@ -34,9 +34,16 @@ export function doesRuleExist(rule: string, additionalRulesDirs?: string[]): boo
 
 export function isRuleEnabled(ruleConfig): boolean {
     if (Array.isArray(ruleConfig)) {
-        return ruleConfig[0] === "on";
+        return ["error", "warn"].includes(ruleConfig[0]);
     }
-    return ruleConfig === "on";
+    return ["error", "warn"].includes(ruleConfig);
+}
+
+export function isWarn(ruleConfig): boolean {
+    if (Array.isArray(ruleConfig)) {
+        return ruleConfig[0] === "warn";
+    }
+    return ruleConfig === "warn";
 }
 
 export function runAllEnabledRules(feature: Feature,
@@ -49,9 +56,10 @@ export function runAllEnabledRules(feature: Feature,
         let rule = rules[ruleName];
         if (isRuleEnabled(configuration[rule.name])) {
             const ruleConfig = Array.isArray(configuration[rule.name]) ? configuration[rule.name][1] : {};
-            const error = rule.run(feature, file, ruleConfig);
-            if (error) {
-                errors = errors.concat(error);
+            const ruleErrors: ResultError[] = rule.run(feature, file, ruleConfig);
+            if (ruleErrors) {
+                ruleErrors.forEach(it => it.errorLevel = isWarn(configuration[rule.name]) ? ErrorLevel.Warn : ErrorLevel.Error);
+                errors = errors.concat(ruleErrors);
             }
         }
     });

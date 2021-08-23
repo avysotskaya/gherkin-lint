@@ -22,7 +22,7 @@ describe("New Line at EOF Rule", function () {
         it("raises an error if invalid configuration is used", function () {
             const featureStub = undefined; // not used by the rule
             const fileStub = { relativePath: "foo.feature", lines: [] };
-            const invalidConfiguration = ["on", "k"];
+            const invalidConfiguration = ["error", "k"];
             rule.run(featureStub, fileStub, invalidConfiguration);
             // @ts-ignore
             const consoleErrorArgs = console.error.args.map(function (args) { // eslint-disable-line no-console

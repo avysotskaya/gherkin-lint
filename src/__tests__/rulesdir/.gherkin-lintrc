@@ -1,6 +1,6 @@
 {
-  "indentation": "on",
-  "custom" : "on",
-  "another-custom" : "on",
-  "another-custom-list" : ["on", {"element": ["first_element"]}]
+  "indentation": "warn",
+  "custom" : "error",
+  "another-custom" : "warn",
+  "another-custom-list" : ["error", {"element": ["first_element"]}]
 }

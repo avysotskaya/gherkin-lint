@@ -1,5 +1,5 @@
 import * as logger from "./utils/logger";
-import { ConfigType, Envelope, FatalError, Feature, File, Result, ResultError } from "./types";
+import { ConfigType, Envelope, FatalError, Feature, File, ErrorLevel, Result, ResultError } from "./types";
 import { runAllEnabledRules } from "./utils/rules";
 
 const _ = require("lodash");
@@ -146,6 +146,6 @@ function getFormattedFatalError(error: FatalError): ResultError {
 
 export function isErrorInResults(results: Result[]): boolean {
     return results.some(function (result) {
-        return (result?.errors?.length || 0) > 0;
+        return (result?.errors?.length || 0) > 0 && result?.errors?.some(e => e.errorLevel === ErrorLevel.Error);
     });
 }

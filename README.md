@@ -6,7 +6,7 @@
 # Gherkin lint
 Uses [Gherkin](https://github.com/cucumber/gherkin-javascript) to parse feature files and runs linting against the default rules, and the optional rules you specified in your `.gherkin-lintrc` file.
 
-Original idea come from this project:
+The original idea came from this project:
 
 https://github.com/vsiakka/gherkin-lint
 
@@ -14,6 +14,7 @@ The changes are:
 
 - The project has been rewritten to Typescript
 - Adds support for writing your own rules in Typescript
+- Adds support of error level
 - Error output was changed from console to process.stdout, to have ability `yarn --silent lint:features > features-errors.log`
 - A couple more changes that will be described as soon as the project is finally stabilized
 
@@ -29,7 +30,8 @@ git clone https://github.com/avysotskaya/gherkin-lint.git
 yarn demo
 ```
 Or check this:
-![console](https://user-images.githubusercontent.com/40882775/130044987-23bf6f6c-2b24-4d15-b54a-a11df78a8091.png)
+![console](https://user-images.githubusercontent.com/40882775/130475256-b9d72bc3-79df-425f-86bc-c74d835be5ea.png)
+
 
 
 ## Available rules
@@ -77,10 +79,10 @@ Or check this:
 ## Rule Configuration
 The not-configurable rules are turned on by default and cannot be turned off. Configurable rules can be customized using a [file](#configuration-file).
 
-The configurable rules are off by default. To turn them on, you will need to create a json file, where you specify the name of each rule and its desired state (which can be "on" or "off"). Eg:
+The configurable rules are off by default. To turn them on, you will need to create a json file, where you specify the name of each rule and its desired state (which can be `error`, `warn` or `off`). E.g.,
 ```
 {
-  "no-unnamed-features": "on"
+  "no-unnamed-features": "error"
 }
 ```
 will turn on the `no-unnamed-features` rule.
@@ -91,7 +93,7 @@ will turn on the `no-unnamed-features` rule.
 
 ```
 {
-  "allowed-tags": ["on", {"tags": ["@watch", "@wip"], "patterns": ["^@todo$"]}]
+  "allowed-tags": ["error", {"tags": ["@watch", "@wip"], "patterns": ["^@todo$"]}]
 }
 ```
 
@@ -103,7 +105,7 @@ Any tag not included in this list won't be allowed.
 
 ```json
 {
-  "file-name": ["on", {"style": "PascalCase"}]
+  "file-name": ["error", {"style": "PascalCase"}]
 }
 ```
 
@@ -122,7 +124,7 @@ All patterns are treated as case insensitive.
 The rule can be configured like this:
 ```
 {
-  "no-restricted-patterns": ["on", {
+  "no-restricted-patterns": ["error", {
     "Global": [
       "^globally restricted pattern"
     ],
@@ -157,7 +159,7 @@ You can override the defaults for `indentation` like this:
 ```
 {
   "indentation" : [
-    "on", {
+    "error", {
       "Feature": 0,
       "Background": 0,
       "Scenario": 0,
@@ -189,7 +191,7 @@ The `max-scenarios-per-file` supports some configuration options:
 The configuration looks like this (showing the defaults):
 ```
 {
-  "max-scenarios-per-file": ["on", {"maxScenarios": 10, "countOutlineExamples": true}]
+  "max-scenarios-per-file": ["error", {"maxScenarios": 10, "countOutlineExamples": true}]
 }
 ```
 
@@ -201,7 +203,7 @@ The default is 70 characters for each of these:
 
 ```
 {
-  "name-length" : ["on", { "Feature": 70, "Scenario": 70, "Step": 70 }]
+  "name-length" : ["error", { "Feature": 70, "Scenario": 70, "Step": 70 }]
 }
 ```
 
@@ -212,13 +214,13 @@ The default is 70 characters for each of these:
 - To enforce new lines at EOF:
 ```
 {
-  "new-line-at-eof": ["on", "yes"]
+  "new-line-at-eof": ["error", "yes"]
 }
 ```
 - To disallow new lines at EOF:
 ```
 {
-  "new-line-at-eof": ["on", "no"]
+  "new-line-at-eof": ["error", "no"]
 }
 ```
 
@@ -230,7 +232,7 @@ To enable searching for duplicates in each individual feature (same scenario nam
 
 ```
 {
-  "no-dupe-scenario-names": ["on", "in-feature"]
+  "no-dupe-scenario-names": ["error", "in-feature"]
 }
 ```
 
@@ -238,7 +240,7 @@ The default case is testing against all the features (same scenario name in diff
 
 ```
 {
-  "no-dupe-scenario-names": "on"
+  "no-dupe-scenario-names": "error"
 }
 ```
 
@@ -246,7 +248,7 @@ or
 
 ```
 {
-  "no-dupe-scenario-names": ["on", "anywhere"]
+  "no-dupe-scenario-names": ["error", "anywhere"]
 }
 ```
 
@@ -255,7 +257,7 @@ or
 `no-restricted-tags` should be configured with the list of restricted tags and patterns:
 ```
 {
-  "no-restricted-tags": ["on", {"tags": ["@watch", "@wip"], "patterns": ["^@todo$"]}]
+  "no-restricted-tags": ["error", {"tags": ["@watch", "@wip"], "patterns": ["^@todo$"]}]
 }
 ```
 
@@ -269,7 +271,7 @@ or
 
 ```
 {
-  "required-tags": ["on", {"tags": ["^@issue:[1-9]\\d*$"], "ignoreUntagged": false}]
+  "required-tags": ["error", {"tags": ["^@issue:[1-9]\\d*$"], "ignoreUntagged": false}]
 }
 ```
 
@@ -279,7 +281,7 @@ or
 `scenario-size` lets you specify a maximum step length for scenarios and backgrounds. The `Scenario` configuration applies to both scenarios and scenario outlines:
 ```
 {
-  "scenario-size": ["on", { "steps-length": { "Background": 15, "Scenario": 15 }}]
+  "scenario-size": ["error", { "steps-length": { "Background": 15, "Scenario": 15 }}]
 }
 ```
 
