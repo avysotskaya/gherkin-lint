@@ -35,11 +35,11 @@ function mergeConfiguration(configuration) {
     return mergedConfiguration;
 }
 
-export function run(feature: Feature, unused, configuration) {
+export function run(feature: Feature, unused, configuration): ResultError[] {
     if (!feature) {
         return [];
     }
-    let errors: ResultError[] = [];
+    const errors: ResultError[] = [];
     const mergedConfiguration = mergeConfiguration(configuration);
 
     function test(parsedLocation, type) {

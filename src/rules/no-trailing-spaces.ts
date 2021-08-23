@@ -2,8 +2,8 @@ import { File, ResultError } from "../types";
 
 export const name = "no-trailing-spaces";
 
-export function run(unused, file: File) {
-    let errors: ResultError[] = [];
+export function run(unused, file: File): ResultError[] {
+    const errors: ResultError[] = [];
     let lineNo = 1;
     file.lines.forEach(line => {
         if (/[\t ]+$/.test(line)) {

@@ -11,3 +11,8 @@ Scenario Outline: This is a Scenario Outline with correct length
 Examples:
   | foo |
   | bar |
+
+Rule: This is a Rule with great lengths
+
+  Example: This is a Rule Example with correct length
+    Then I should not see a length error

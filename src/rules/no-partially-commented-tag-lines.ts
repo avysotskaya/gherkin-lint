@@ -2,11 +2,11 @@ import { Examples, Feature, ResultError, Scenario } from "../types";
 
 export const name = "no-partially-commented-tag-lines";
 
-export function run(feature: Feature) {
+export function run(feature: Feature): ResultError[] {
     if (!feature) {
         return [];
     }
-    let errors: ResultError[] = [];
+    const errors: ResultError[] = [];
     checkTags(feature, errors);
     feature.children?.forEach(child => {
         if (child.scenario) {

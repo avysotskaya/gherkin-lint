@@ -3,11 +3,11 @@ import { Feature, File, ResultError } from "../types";
 export const name = "no-dupe-feature-names";
 const features = [];
 
-export function run(feature: Feature, file: File) {
+export function run(feature: Feature, file: File): ResultError[] {
     if (!feature) {
         return [];
     }
-    let errors: ResultError[] = [];
+    const errors: ResultError[] = [];
     if (feature.name) {
         if (feature.name in features) {
             const dupes = features[feature.name].files.join(", ");

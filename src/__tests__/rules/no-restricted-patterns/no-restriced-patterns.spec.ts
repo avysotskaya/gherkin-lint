@@ -140,6 +140,42 @@ describe("No Restricted Patterns Rule", function () {
                     },
                     line: 7,
                 },
+                {
+                    messageElements: {
+                        pattern: "a bad description",
+                        string: "A bad description",
+                        nodeType: "Scenario",
+                        property: "description",
+                    },
+                    line: 11,
+                },
+                {
+                    messageElements: {
+                        string: "Disallowed exact and partial matching",
+                        pattern: "^.*disallowed.*$",
+                        nodeType: "Scenario",
+                        property: "name",
+                    },
+                    line: 11,
+                },
+                {
+                    messageElements: {
+                        string: "disallowed scenario step",
+                        pattern: "^.*disallowed.*$",
+                        nodeType: "Step",
+                        property: "text",
+                    },
+                    line: 13,
+                },
+                {
+                    messageElements: {
+                        pattern: "^a restricted global pattern$",
+                        string: "a restricted global pattern",
+                        nodeType: "Step",
+                        property: "text",
+                    },
+                    line: 14,
+                },
             ]);
         });
     it("detects errors in ScenarioOutline names, descriptions and steps that match the Background or Global config",

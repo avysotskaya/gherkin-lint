@@ -9,8 +9,8 @@ export const availableConfigs = [
     "no",
 ];
 
-export function run(unused, file: File, configuration) {
-    let errors: ResultError[] = [];
+export function run(unused, file: File, configuration): ResultError[] {
+    const errors: ResultError[] = [];
     if (_.indexOf(availableConfigs, configuration) === -1) {
         logger.boldError(`${name} requires an extra configuration value.\nAvailable configurations: ${availableConfigs.join(
             ", ")}\nFor syntax please look at the documentation.`);

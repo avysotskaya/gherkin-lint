@@ -3,7 +3,6 @@ import * as rule from "../../../rules/name-length";
 
 const runTest = createRuleTest(rule,
     "<%= element %> name is too long. Length of <%= length %> is longer than the maximum allowed: 70");
-
 describe("Name length rule", function () {
     it("doesn't raise errors when the default configuration is used and there are no length violations", function () {
         return runTest("name-length/CorrectLength.feature", {}, []);
@@ -27,6 +26,15 @@ describe("Name length rule", function () {
         }, {
             messageElements: { element: "Step", length: 108 },
             line: 10,
+        }, {
+            messageElements: { element: "Rule", length: 86 },
+            line: 15,
+        }, {
+            messageElements: { element: "Scenario", length: 94 },
+            line: 17,
+        }, {
+            messageElements: { element: "Step", length: 101 },
+            line: 18,
         }]);
     });
 });

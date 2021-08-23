@@ -4,11 +4,11 @@ const _ = require("lodash");
 
 export const name = "no-duplicate-tags";
 
-export function run(feature: Feature) {
+export function run(feature: Feature): ResultError[] {
     if (!feature) {
         return [];
     }
-    let errors: ResultError[] = [];
+    const errors: ResultError[] = [];
     verifyTags(feature, errors);
     feature.children?.forEach(child => {
         if (child.scenario) {

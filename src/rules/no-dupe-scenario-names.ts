@@ -7,11 +7,11 @@ export const availableConfigs = [
 ];
 let scenarios = [];
 
-export function run(feature: Feature, file: File, configuration) {
+export function run(feature: Feature, file: File, configuration): ResultError[] {
     if (!feature) {
         return [];
     }
-    let errors: ResultError[] = [];
+    const errors: ResultError[] = [];
     if (configuration === "in-feature") {
         scenarios = [];
     }
@@ -53,7 +53,7 @@ function checkScenario(scenario: Scenario, file: File, errors: ResultError[]) {
     }
 }
 
-function getFileLinePairsAsStr(objects) {
+function getFileLinePairsAsStr(objects): string {
     let strings: string[] = [];
     objects.forEach(object => {
         strings.push(`${object.file}:${object.line}`);

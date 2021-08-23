@@ -1,4 +1,4 @@
-import { Feature } from "../types";
+import { Feature, ResultError } from "../types";
 
 const path = require("path");
 const _ = require("lodash");
@@ -15,7 +15,7 @@ const checkers = {
     "snake_case": filename => _.snakeCase(filename),
 };
 
-export function run(feature: Feature, file, configuration) {
+export function run(feature: Feature, file, configuration): ResultError[] {
     if (!file) {
         return [];
     }

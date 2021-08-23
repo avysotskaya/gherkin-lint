@@ -1,4 +1,4 @@
-import { Feature, ResultError } from "../types";
+import { Feature, FeatureChild, ResultError, RuleChild } from "../types";
 import * as gherkinUtils from "./utils/gherkin";
 
 export const name = "no-restricted-patterns";
@@ -10,25 +10,40 @@ export const availableConfigs = {
     "Feature": [],
 };
 
-export function run(feature: Feature, unused, configuration) {
+export function run(feature: Feature, unused, configuration): ResultError[] {
     if (!feature) {
         return [];
     }
     let errors: ResultError[] = [];
     const restrictedPatterns = getRestrictedPatterns(configuration);
-    const language = feature.language;
+    const language = feature.language || "en";
     // Check the feature itself
     checkNameAndDescription(feature, restrictedPatterns, language, errors);
     // Check the feature children
     feature.children?.forEach(child => {
-        let node = child.background || child.scenario;
-        checkNameAndDescription(node, restrictedPatterns, language, errors);
-        // And all the steps of each child
-        node?.steps?.forEach(step => {
-            checkStepNode(step, node, restrictedPatterns, language, errors);
-        });
+        if (child.rule) {
+            child.rule.children?.forEach(childRule => {
+                checkNode(childRule, restrictedPatterns, language, errors);
+            });
+        } else {
+            checkNode(child, restrictedPatterns, language, errors);
+        }
     });
     return errors;
+}
+
+function checkNode(child: FeatureChild | RuleChild,
+    restrictedPatterns: {},
+    language: string,
+    errors: ResultError[]) {
+    const node = child.background || child.scenario;
+    if (node) {
+        checkNameAndDescription(node, restrictedPatterns, language, errors);
+        // And all the steps of each child
+        node.steps?.forEach(step => {
+            checkStepNode(step, node, restrictedPatterns, language, errors);
+        });
+    }
 }
 
 function getRestrictedPatterns(configuration) {

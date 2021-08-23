@@ -2,8 +2,8 @@ import { Feature, ResultError } from "../types";
 
 export const name = "no-unnamed-features";
 
-export function run(feature: Feature) {
-    let errors: ResultError[] = [];
+export function run(feature: Feature): ResultError[] {
+    const errors: ResultError[] = [];
     if (!feature || !feature.name) {
         const location = feature?.location?.line || 0;
         errors.push({

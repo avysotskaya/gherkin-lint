@@ -3,11 +3,11 @@ import * as gherkinUtils from "./utils/gherkin";
 
 export const name = "use-and";
 
-export function run(feature: Feature) {
+export function run(feature: Feature): ResultError[] {
     if (!feature) {
         return [];
     }
-    let errors: ResultError[] = [];
+    const errors: ResultError[] = [];
     feature.children?.forEach(child => {
         if (child.rule) {
             child.rule.children?.map(it => it.background || it.scenario)
@@ -36,7 +36,7 @@ function checkKeyword(node: Background | Scenario | null | undefined,
     });
 }
 
-function createError(step: Step) {
+function createError(step: Step): ResultError {
     return {
         message: `Step "${step.keyword}${step.text}" should use And instead of ${step.keyword}`,
         rule: name,

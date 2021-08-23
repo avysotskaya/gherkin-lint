@@ -5,12 +5,11 @@ export const name = "keywords-in-logical-order";
 
 const keywordList = ["given", "when", "then"];
 
-export function run(feature: Feature) {
+export function run(feature: Feature): ResultError[] {
     if (!feature) {
         return [];
     }
-    let errors: ResultError[] = [];
-
+    const errors: ResultError[] = [];
     feature.children?.forEach((child) => {
         if (child.rule) {
             child.rule.children?.forEach(ruleChild=> checkNode(ruleChild, feature, errors));

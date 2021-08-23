@@ -5,12 +5,9 @@ const _ = require("lodash");
 
 export const name = "no-superfluous-tags";
 
-export function run(feature: Feature) {
-    if (!feature) {
-        return [];
-    }
-    let errors: ResultError[] = [];
-    feature.children?.forEach(child => {
+export function run(feature: Feature): ResultError[] {
+    const errors: ResultError[] = [];
+    feature?.children?.forEach(child => {
         const node = child.rule || child.background || child.scenario;
         checkTags(node, feature, feature.language, errors);
         if (node && "examples" in node) {

@@ -1,4 +1,4 @@
-import { Background, Feature, ResultError, Scenario } from "../types";
+import { Background, Feature, FeatureChild, ResultError, RuleChild, Scenario } from "../types";
 
 const _ = require("lodash");
 
@@ -9,30 +9,40 @@ export const availableConfigs = {
     "Step": 70,
     "Scenario": 70,
 };
-let errors: ResultError[] = [];
 
-export function run(feature: Feature, unused, configuration) {
+export function run(feature: Feature, unused, configuration): ResultError[] {
     if (!feature) {
         return [];
     }
-    errors = [];
+    const errors: ResultError[] = [];
     const mergedConfiguration = _.merge(availableConfigs, configuration);
     // Check Feature name length
-    test(feature.name, feature.location, mergedConfiguration, "Feature");
+    test(feature.name, feature.location, mergedConfiguration, "Feature", errors);
     feature.children?.forEach(child => {
         if (child.rule) {
-            test(child.rule.name, child.rule.location, mergedConfiguration, "Rule");
-        } else if (child.background) {
-            testSteps(child.background, mergedConfiguration);
-        } else if (child.scenario) {
-            test(child.scenario.name, child.scenario.location, mergedConfiguration, "Scenario");
-            testSteps(child.scenario, mergedConfiguration);
+            test(child.rule.name, child.rule.location, mergedConfiguration, "Rule", errors);
+            child.rule.children?.forEach(ruleChild => {
+                checkNode(ruleChild, mergedConfiguration, errors);
+            });
+        } else {
+            checkNode(child, mergedConfiguration, errors);
         }
     });
     return errors;
 }
 
-function test(nameString, location, configuration, type) {
+function checkNode(child: FeatureChild | RuleChild,
+    mergedConfiguration,
+    errors: ResultError[]) {
+    if (child.background) {
+        testSteps(child.background, mergedConfiguration, errors);
+    } else if (child.scenario) {
+        test(child.scenario.name, child.scenario.location, mergedConfiguration, "Scenario", errors);
+        testSteps(child.scenario, mergedConfiguration, errors);
+    }
+}
+
+function test(nameString, location, configuration, type, errors) {
     if (nameString && (nameString.length > configuration[type])) {
         errors.push({
             message: `${type} name is too long. Length of ${nameString.length} is longer than the maximum allowed: ${configuration[type]}`,
@@ -42,9 +52,9 @@ function test(nameString, location, configuration, type) {
     }
 }
 
-function testSteps(node: Background | Scenario, mergedConfiguration: any) {
+function testSteps(node: Background | Scenario, mergedConfiguration: any, errors: ResultError[]) {
     node.steps?.forEach(step => {
         // Check Step name length
-        test(step.text, step.location, mergedConfiguration, "Step");
+        test(step.text, step.location, mergedConfiguration, "Step", errors);
     });
 }

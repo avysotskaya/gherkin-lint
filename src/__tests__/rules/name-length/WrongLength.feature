@@ -11,3 +11,8 @@ Scenario Outline: This is a Scenario Outline with incorrect length - more than 7
 Examples:
   | foo |
   | bar |
+
+Rule: This is a Rule with incorrect length - more than 70 characters more than 70 characters
+
+Example: This is a Rule Example with incorrect length - more than 70 characters more than 70 characters
+  Then I should see a length error - more than 70 characters more than 70 characters more than 70 characters

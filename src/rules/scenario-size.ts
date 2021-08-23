@@ -12,14 +12,14 @@ export const availableConfigs = {
     },
 };
 
-export function run(feature: Feature, unused, configuration) {
+export function run(feature: Feature, unused, configuration): ResultError[] {
     if (!feature) {
-        return;
+        return [];
     }
     if (_.isEmpty(configuration)) {
         configuration = availableConfigs;
     }
-    let errors: ResultError[] = [];
+    const errors: ResultError[] = [];
     feature.children?.forEach((child) => {
         const node = child.rule || child.background || child.scenario;
         if (node) {

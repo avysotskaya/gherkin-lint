@@ -2,11 +2,11 @@ import { Background, Feature, ResultError } from "../types";
 
 export const name = "no-empty-background";
 
-export function run(feature: Feature) {
+export function run(feature: Feature): ResultError[] {
     if (!feature) {
         return [];
     }
-    let errors: ResultError[] = [];
+    const errors: ResultError[] = [];
     feature.children?.forEach(child => {
         if (child.background) {
             if (child.background?.steps?.length === 0) {
@@ -17,7 +17,7 @@ export function run(feature: Feature) {
     return errors;
 }
 
-function createError(background: Background) {
+function createError(background: Background): ResultError {
     return {
         message: "Empty backgrounds are not allowed.",
         rule: name,

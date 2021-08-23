@@ -9,12 +9,12 @@ export const availableConfigs = {
     ignoreUntagged: true,
 };
 
-export function run(feature: Feature, unused, config) {
+export function run(feature: Feature, unused, config): ResultError[] {
     if (!feature) {
         return [];
     }
     const mergedConfig = _.merge({}, availableConfigs, config);
-    let errors: ResultError[] = [];
+    const errors: ResultError[] = [];
     feature.children?.forEach((child) => {
         if (child.scenario) {
             const type = gherkinUtils.getNodeType(child.scenario, feature.language);

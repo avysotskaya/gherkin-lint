@@ -9,14 +9,14 @@ export const availableConfigs = {
     "patterns": [],
 };
 
-export function run(feature: Feature, unused, configuration) {
+export function run(feature: Feature, unused, configuration): ResultError[] {
     if (!feature) {
         return [];
     }
     const forbiddenTags = configuration.tags;
     const forbiddenPatterns = getForbiddenPatterns(configuration);
     const language = feature.language;
-    let errors: ResultError[] = [];
+    const errors: ResultError[] = [];
     checkTags(feature, language, forbiddenTags, forbiddenPatterns, errors);
     feature.children?.forEach(child => {
         // backgrounds don't have tags

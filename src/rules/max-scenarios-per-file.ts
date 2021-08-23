@@ -8,11 +8,11 @@ const defaultConfig = {
     "countOutlineExamples": true,
 };
 
-export function run(feature: Feature, unused, config) {
+export function run(feature: Feature, unused, config): ResultError[] {
     if (!feature) {
         return [];
     }
-    let errors: ResultError[] = [];
+    const errors: ResultError[] = [];
     const mergedConfiguration = _.merge({}, defaultConfig, config);
     const maxScenarios = mergedConfiguration.maxScenarios;
     let count = feature.children?.length || 0;

@@ -8,11 +8,11 @@ export const availableConfigs = {
     "patterns": [],
 };
 
-export function run(feature: Feature, unused, configuration) {
+export function run(feature: Feature, unused, configuration): ResultError[] {
     if (!feature) {
         return [];
     }
-    let errors: ResultError[] = [];
+    const errors: ResultError[] = [];
     const allowedTags = configuration.tags;
     const allowedPatterns = getAllowedPatterns(configuration);
     checkTags(feature, allowedTags, allowedPatterns, errors);

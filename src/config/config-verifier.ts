@@ -2,7 +2,7 @@ import * as rules from "../utils/rules";
 import { ConfigType } from "../types";
 
 export function verifyConfigurationFile(config: Partial<ConfigType>, additionalRulesDirs?: string[]): string[] {
-    let errors: string[] = [];
+    const errors: string[] = [];
     for (let rule in config) {
         if (!rules.doesRuleExist(rule, additionalRulesDirs)) {
             errors.push(`Rule "${rule}" does not exist`);

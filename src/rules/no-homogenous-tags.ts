@@ -4,14 +4,14 @@ const _ = require("lodash");
 
 export const name = "no-homogenous-tags";
 
-export function run(feature: Feature) {
+export function run(feature: Feature): ResultError[] {
     if (!feature) {
         return [];
     }
-    let errors: ResultError[] = [];
+    const errors: ResultError[] = [];
     // Tags that exist in every scenario and scenario outline
     // should be applied on a feature level
-    let childrenTags: string[] = [];
+    const childrenTags: string[] = [];
     feature.children?.forEach(child => {
         if (child.scenario) {
             let scenario = child.scenario;

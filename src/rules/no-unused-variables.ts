@@ -2,11 +2,11 @@ import { Feature, ResultError } from "../types";
 
 export const name = "no-unused-variables";
 
-export function run(feature: Feature) {
+export function run(feature: Feature): ResultError[] {
     if (!feature) {
         return [];
     }
-    let errors: ResultError[] = [];
+    const errors: ResultError[] = [];
     const stepVariableRegex = /<([^>]*)>/gu;
     feature.children?.forEach(child => {
         if (!child.scenario) {

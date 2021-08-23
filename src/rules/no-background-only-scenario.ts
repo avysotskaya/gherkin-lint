@@ -2,11 +2,11 @@ import { Background, Feature, ResultError } from "../types";
 
 export const name = "no-background-only-scenario";
 
-export function run(feature: Feature) {
+export function run(feature: Feature): ResultError[] {
     if (!feature) {
         return [];
     }
-    let errors: ResultError[] = [];
+    const errors: ResultError[] = [];
     feature.children?.forEach(child => {
         if (child.background) {
             // @ts-ignore
@@ -21,7 +21,7 @@ export function run(feature: Feature) {
     return errors;
 }
 
-function createError(background: Background) {
+function createError(background: Background): ResultError {
     return {
         message: "Backgrounds are not allowed when there is just one scenario.",
         rule: name,

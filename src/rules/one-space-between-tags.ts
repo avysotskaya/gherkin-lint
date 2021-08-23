@@ -4,11 +4,11 @@ const _ = require("lodash");
 
 export const name = "one-space-between-tags";
 
-export function run(feature: Feature) {
+export function run(feature: Feature): ResultError[] {
     if (!feature) {
-        return;
+        return [];
     }
-    let errors: ResultError[] = [];
+    const errors: ResultError[] = [];
     testTags(feature, errors);
     feature.children?.forEach(child => {
         if (child.scenario) {
