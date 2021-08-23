@@ -30,7 +30,7 @@ git clone https://github.com/avysotskaya/gherkin-lint.git
 yarn demo
 ```
 Or check this:
-![console](https://user-images.githubusercontent.com/40882775/130475256-b9d72bc3-79df-425f-86bc-c74d835be5ea.png)
+![console](https://user-images.githubusercontent.com/40882775/130507958-c696761e-5105-4ff1-9c4c-48df095b8c69.png)
 
 
 
