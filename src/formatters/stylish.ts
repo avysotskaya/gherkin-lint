@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import { ErrorLevel, Result, ResultError } from "../types";
 import _ = require("lodash");
+import terminalLink from "terminal-link";
 
 const style = {
     gray: function (text: string) {
@@ -12,16 +13,18 @@ const style = {
 };
 
 function stylizeFilePath(filePath: string) {
-    return style.underline(`${filePath}:`);
+    return style.underline(filePath);
 }
 
-function stylizeError(error: ResultError, maxLineLength: number, maxMessageLength: number, addColors: boolean) {
+function stylizeError(filePath: string, error: ResultError, maxLineLength: number, maxMessageLength: number,
+    addColors: boolean) {
     const indent = "  "; // indent 2 spaces so it looks pretty
     const errorLinePadded = error.line?.toString().padEnd(maxLineLength);
     const errorLineStylized = addColors ? style.gray(errorLinePadded) : errorLinePadded;
     const errorRuleStylized = addColors ? style.gray(error.rule) : error.rule;
-    const logLevel = error.errorLevel === ErrorLevel.Error ? chalk.red("error") : chalk.yellow("warning");
-    return `${indent}${errorLineStylized}${indent}${logLevel}\t${error.message.padEnd(maxMessageLength)}\t${errorRuleStylized}`;
+    const errorLevel = error.errorLevel === ErrorLevel.Error ? chalk.red("error") : chalk.yellow("warning");
+    const link = terminalLink(errorRuleStylized, `${filePath}:${error.line || 0}`);
+    return [indent, errorLineStylized, errorLevel, error.message.padEnd(maxMessageLength), link].join(indent);
 }
 
 function getMaxLineLength(result: Result): number {
@@ -41,7 +44,7 @@ function getMaxMessageLength(result: Result, maxLineLength: number, consoleWidth
         const errorStr = error.message.toString();
         // Get the length of the formatted error message when no extra padding is applied
         // If the formatted message is longer than the console width, we will ignore its length
-        const expandedErrorStrLength = stylizeError(error, maxLineLength, 0, false).length;
+        const expandedErrorStrLength = stylizeError(result.filePath, error, maxLineLength, 0, false).length;
         if (errorStr.length > length && expandedErrorStrLength < consoleWidth) {
             length = errorStr.length;
         }
@@ -63,7 +66,7 @@ export function printResults(results: Result[]) {
             const maxMessageLength = getMaxMessageLength(result, maxLineLength, consoleWidth);
             messages.push(stylizeFilePath(result.filePath));
             _(result.errors).sortBy("errorLevel", "line").forEach(function (error) {
-                messages.push((stylizeError(error, maxLineLength, maxMessageLength, true)));
+                messages.push((stylizeError(result.filePath, error, maxLineLength, maxMessageLength, true)));
             });
             messages.push("\n");
         }
