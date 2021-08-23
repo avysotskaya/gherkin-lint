@@ -1,5 +1,6 @@
 import chalk from "chalk";
-import { Result, ResultError } from "../types";
+import { ErrorLevel, Result, ResultError } from "../types";
+import _ = require("lodash");
 
 const style = {
     gray: function (text: string) {
@@ -11,7 +12,7 @@ const style = {
 };
 
 function stylizeFilePath(filePath: string) {
-    return style.underline(filePath);
+    return style.underline(`${filePath}:`);
 }
 
 function stylizeError(error: ResultError, maxLineLength: number, maxMessageLength: number, addColors: boolean) {
@@ -19,8 +20,8 @@ function stylizeError(error: ResultError, maxLineLength: number, maxMessageLengt
     const errorLinePadded = error.line?.toString().padEnd(maxLineLength);
     const errorLineStylized = addColors ? style.gray(errorLinePadded) : errorLinePadded;
     const errorRuleStylized = addColors ? style.gray(error.rule) : error.rule;
-    return indent + errorLineStylized + indent + chalk.red("error") + indent + error.message.padEnd(maxMessageLength)
-        + indent + errorRuleStylized;
+    const logLevel = error.errorLevel === ErrorLevel.Error ? chalk.red("error") : chalk.yellow("warning");
+    return `${indent}${errorLineStylized}${indent}${logLevel}\t${error.message.padEnd(maxMessageLength)}\t${errorRuleStylized}`;
 }
 
 function getMaxLineLength(result: Result): number {
@@ -61,7 +62,7 @@ export function printResults(results: Result[]) {
             const maxLineLength = getMaxLineLength(result);
             const maxMessageLength = getMaxMessageLength(result, maxLineLength, consoleWidth);
             messages.push(stylizeFilePath(result.filePath));
-            result.errors.forEach(function (error) {
+            _(result.errors).sortBy("errorLevel", "line").forEach(function (error) {
                 messages.push((stylizeError(error, maxLineLength, maxMessageLength, true)));
             });
             messages.push("\n");

@@ -14,11 +14,11 @@ export function verifyConfigurationFile(config: Partial<ConfigType>, additionalR
 }
 
 function verifyRuleConfiguration(rule: string, ruleConfig, additionalRulesDirs?: string[], errors: string[] = []) {
-    const enablingSettings = ["on", "off"];
+    const enablingSettings = ["error", "warn", "off"];
     const genericErrorMsg = `Invalid rule configuration for "${rule}" -`;
     if (Array.isArray(ruleConfig)) {
         if (!enablingSettings.includes(ruleConfig[0])) {
-            errors.push(`${genericErrorMsg} The first part of the config should be "on" or "off"`);
+            errors.push(`${genericErrorMsg} The first part of the config should be "error", "warn" or "off"`);
         }
         if (ruleConfig.length !== 2) {
             errors.push(`${genericErrorMsg} The config should only have 2 parts.`);
@@ -37,7 +37,7 @@ function verifyRuleConfiguration(rule: string, ruleConfig, additionalRulesDirs?:
         }
     } else {
         if (!enablingSettings.includes(ruleConfig)) {
-            errors.push(`${genericErrorMsg} The the config should be "on" or "off"`);
+            errors.push(`${genericErrorMsg} The the config should be "error", "warn" or "off"`);
         }
     }
 }
