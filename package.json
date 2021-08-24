@@ -1,6 +1,6 @@
 {
   "name": "gherkin-lint-ts",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "Gherkin features linter written in Typescript",
   "main": "lib/src/index.js",
   "bin": {
@@ -37,8 +37,8 @@
     "lodash": "4.17.21",
     "rimraf": "3.0.2",
     "strip-ansi": "6.0.0",
-    "ts-node": "9.1.1",
     "terminal-link": "2.1.1",
+    "ts-node": "9.1.1",
     "xml-js": "1.6.11",
     "yargs": "17.1.0"
   },
