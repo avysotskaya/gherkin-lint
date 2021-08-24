@@ -1,4 +1,5 @@
 import { Examples, Feature, ResultError, Scenario } from "../types";
+import chalk from "chalk";
 
 const _ = require("lodash");
 
@@ -32,7 +33,8 @@ function testTags(node: Feature | Scenario | Examples, errors: ResultError[]) {
                         errors.push({
                             line: tags[i].location.line,
                             rule: name,
-                            message: `There is more than one space between the tags ${tags[i].name} and ${tags[i + 1].name}`,
+                            message: `There is more than one space between the tags ${chalk.yellow(tags[i].name)
+                            } and ${chalk.yellow(tags[i + 1].name)}`,
                         });
                     }
                 });

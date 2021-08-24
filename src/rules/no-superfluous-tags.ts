@@ -1,5 +1,6 @@
 import { Feature, ResultError } from "../types";
 import * as gherkinUtils from "./utils/gherkin";
+import chalk from "chalk";
 
 const _ = require("lodash");
 
@@ -27,7 +28,8 @@ function checkTags(child, parent, language, errors: ResultError[]) {
     const parentType = gherkinUtils.getNodeType(parent, language);
     superfluousTags.forEach(tag => {
         errors.push({
-            message: `Tag duplication between ${childType} and its corresponding ${parentType}: ${tag.name}`,
+            message: `Tag duplication between ${chalk.cyan(childType)
+            } and its corresponding ${chalk.cyan(parentType)}: ${chalk.yellow(tag.name)}`,
             rule: name,
             line: tag.location.line,
         });

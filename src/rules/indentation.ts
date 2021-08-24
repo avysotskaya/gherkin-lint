@@ -1,5 +1,6 @@
 import * as gherkinUtils from "./utils/gherkin";
 import { Feature, ResultError, Step, Tag } from "../types";
+import chalk from "chalk";
 
 const _ = require("lodash");
 
@@ -47,7 +48,7 @@ export function run(feature: Feature, unused, configuration): ResultError[] {
         // indentation we need to subtract 1
         if (parsedLocation.column - 1 !== mergedConfiguration[type]) {
             errors.push({
-                message: `Wrong indentation for "${type
+                message: `Wrong indentation for "${chalk.cyan(type)
                 }", expected indentation level of ${mergedConfiguration[type]
                 }, but got ${parsedLocation.column - 1}`,
                 rule: name,

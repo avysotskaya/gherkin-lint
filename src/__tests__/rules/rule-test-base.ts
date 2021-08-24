@@ -1,5 +1,6 @@
 import { assert } from "chai";
 import { readAndParseFile } from "../../linter";
+import stripAnsi from "strip-ansi";
 
 const _ = require("lodash");
 
@@ -14,7 +15,9 @@ export function createRuleTest(rule, messageTemplate) {
         });
         return readAndParseFile(`src/__tests__/rules/${featureFile}`/*, "utf8"*/)
             .then(({ feature, file }) => {
-                assert.sameDeepMembers(rule.run(feature, file, configuration), expectedErrors);
+                const actual = rule.run(feature, file, configuration);
+                actual?.forEach(error => error.message = stripAnsi(error.message));
+                assert.sameDeepMembers(actual, expectedErrors);
             });
     };
 }

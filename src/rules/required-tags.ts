@@ -1,5 +1,6 @@
 import { Feature, ResultError, Tag } from "../types";
 import * as gherkinUtils from "./utils/gherkin";
+import chalk from "chalk";
 
 const _ = require("lodash");
 
@@ -18,7 +19,7 @@ export function run(feature: Feature, unused, config): ResultError[] {
     feature.children?.forEach((child) => {
         if (child.scenario) {
             const type = gherkinUtils.getNodeType(child.scenario, feature.language);
-            const line = child.scenario.location?.line || -1;
+            const line = child.scenario.location?.line || 0;
             const scenarioTags = child.scenario?.tags || [];
             // Check each Scenario for the required tags
             mergedConfig.tags.forEach(tag => {
@@ -38,7 +39,7 @@ function checkTagExists(requiredTag: string, ignoreUntagged: boolean, scenarioTa
 
 function createError(requiredTag: string, scenarioType: string, scenarioLine: number) {
     return {
-        message: `No tag found matching ${requiredTag} for ${scenarioType}`,
+        message: `No tag found matching ${chalk.yellow(requiredTag)} for ${chalk.cyan(scenarioType)}`,
         rule: name,
         line: scenarioLine,
     };

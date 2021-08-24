@@ -16,7 +16,7 @@ export function run(feature: Feature): ResultError[] {
                 errors.push({
                     message: "Scenario Outline does not have any Examples",
                     rule: name,
-                    line: scenario.location?.line || -1,
+                    line: scenario.location?.line || 0,
                 });
             }
         }

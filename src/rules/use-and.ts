@@ -1,5 +1,6 @@
 import { Background, Feature, ResultError, Scenario, Step } from "../types";
 import * as gherkinUtils from "./utils/gherkin";
+import chalk from "chalk";
 
 export const name = "use-and";
 
@@ -38,8 +39,8 @@ function checkKeyword(node: Background | Scenario | null | undefined,
 
 function createError(step: Step): ResultError {
     return {
-        message: `Step "${step.keyword}${step.text}" should use And instead of ${step.keyword}`,
+        message: `Step "${chalk.yellow(`${step.keyword}${step.text}`)}" should use And instead of ${chalk.cyan(step.keyword)}`,
         rule: name,
-        line: step.location?.line || -1,
+        line: step.location?.line || 0,
     };
 }

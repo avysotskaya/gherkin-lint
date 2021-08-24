@@ -1,5 +1,6 @@
 import { Feature, FeatureChild, ResultError, RuleChild } from "../types";
 import * as gherkinUtils from "./utils/gherkin";
+import chalk from "chalk";
 
 export const name = "no-restricted-patterns";
 export const availableConfigs = {
@@ -106,7 +107,7 @@ function check(node, property, pattern, language, errors) {
         // white space before and after, unlike steps
         if (item.trim().match(pattern)) {
             errors.push({
-                message: `${type} ${property}: "${item.trim()}" matches restricted pattern "${pattern}"`,
+                message: `${type} ${property}: "${chalk.cyan(item.trim())}" matches restricted pattern "${chalk.yellow(pattern)}"`,
                 rule: name,
                 line: node.location.line,
             });

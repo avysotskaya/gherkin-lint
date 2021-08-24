@@ -25,7 +25,7 @@ function checkTags(node: Feature | Scenario | Examples, errors: ResultError[]) {
             errors.push({
                 message: "Partially commented tag lines not allowed",
                 rule: name,
-                line: tag.location?.line || -1,
+                line: tag.location?.line || 0,
             });
         }
     });

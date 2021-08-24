@@ -21,6 +21,6 @@ function createError(background: Background): ResultError {
     return {
         message: "Empty backgrounds are not allowed.",
         rule: name,
-        line: background.location?.line || -1,
+        line: background.location?.line || 0,
     };
 }

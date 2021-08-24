@@ -1,5 +1,6 @@
 import { Feature, FeatureChild, ResultError, RuleChild, Step } from "../types";
 import * as gherkinUtils from "./utils/gherkin";
+import chalk from "chalk";
 
 export const name = "keywords-in-logical-order";
 
@@ -40,8 +41,9 @@ function checkNode(child: FeatureChild | RuleChild, feature: Feature, errors: Re
 
 function createError(step: Step, maxKeyword: string) {
     return {
-        message: `Step "${step.keyword}${step.text}" should not appear after step using keyword ${maxKeyword}`,
+        message: `Step "${chalk.yellow(`${step.keyword}${step.text}`)
+        }" should not appear after step using keyword ${chalk.cyan(maxKeyword)}`,
         rule: name,
-        line: step.location?.line || -1,
+        line: step.location?.line || 0,
     };
 }

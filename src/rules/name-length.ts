@@ -1,4 +1,5 @@
 import { Background, Feature, FeatureChild, ResultError, RuleChild, Scenario } from "../types";
+import chalk from "chalk";
 
 const _ = require("lodash");
 
@@ -45,7 +46,8 @@ function checkNode(child: FeatureChild | RuleChild,
 function test(nameString, location, configuration, type, errors) {
     if (nameString && (nameString.length > configuration[type])) {
         errors.push({
-            message: `${type} name is too long. Length of ${nameString.length} is longer than the maximum allowed: ${configuration[type]}`,
+            message: `${chalk.cyan(type)} name is too long. Length of ${nameString.length
+            } is longer than the maximum allowed: ${configuration[type]}`,
             rule: name,
             line: location.line,
         });

@@ -2,6 +2,7 @@ import * as path from "path";
 import { expect } from "chai";
 import * as linter from "../../linter";
 import * as configParser from "../../config/config-parser";
+import stripAnsi from "strip-ansi";
 
 describe("rulesdir CLI option", function () {
     it("loads additional rules from specified directories", function () {
@@ -13,6 +14,7 @@ describe("rulesdir CLI option", function () {
         const featureFile = path.join(__dirname, "simple.features");
         return linter.lint([featureFile], config, additionalRulesDirs)
             .then((results) => {
+                results?.forEach(result=> result.errors?.forEach(error => error.message = stripAnsi(error.message)));
                 expect(results).to.deep.equal([
                     {
                         errors: [

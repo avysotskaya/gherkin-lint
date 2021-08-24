@@ -12,7 +12,7 @@ export function run(feature: Feature): ResultError[] {
                 errors.push({
                     message: 'Cannot use "Examples" in a "Scenario", use a "Scenario Outline" instead',
                     rule: name,
-                    line: child.scenario.location?.line || -1,
+                    line: child.scenario.location?.line || 0,
                 });
             }
         }
