@@ -26,7 +26,7 @@ npm install gherkin-lint-ts
 ## Demo
 To see the output for all the errors that the linter can detect run:
 ```
-git clone https://github.com/avysotskaya/gherkin-lint.git
+git clone https://github.com/avysotskaya/gherkin-lint-ts.git
 yarn demo
 ```
 Or check this:
