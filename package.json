@@ -1,6 +1,6 @@
 {
   "name": "gherkin-lint-ts",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Gherkin features linter written in Typescript",
   "main": "lib/src/index.js",
   "bin": {
@@ -22,7 +22,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/avysotskaya/gherkin-lint.git"
+    "url": "https://github.com/avysotskaya/gherkin-lint-ts.git"
+  },
+  "publishConfig": {
+    "@avysotskaya:registry": "https://npm.pkg.github.com"
   },
   "dependencies": {
     "@types/glob": "7.1.4",
@@ -73,5 +76,13 @@
     "demo": "ts-node ./src/index.ts -c ./demo/configs/.gherkin-lintrc.json ./demo",
     "demo-js": "node ./lib/src/index.js -c demo/configs/.gherkin-lintrc.json demo/**"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/avysotskaya/gherkin-lint-ts/issues"
+  },
+  "homepage": "https://github.com/avysotskaya/gherkin-lint-ts#readme",
+  "directories": {
+    "lib": "lib"
+  },
+  "author": "Alesia Vysotskaya"
 }
