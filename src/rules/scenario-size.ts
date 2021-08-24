@@ -1,5 +1,6 @@
 import { Background, Feature, ResultError, Scenario } from "../types";
 import * as gherkinUtils from "./utils/gherkin";
+import chalk from "chalk";
 
 const _ = require("lodash");
 
@@ -47,9 +48,9 @@ function checkSteps(node: Background | Scenario, maxSize: number, errors: Result
     let length = node.steps?.length || -1;
     if (length > maxSize) {
         errors.push({
-            message: `Element ${nodeType} too long: actual ${length}, expected ${maxSize}`,
+            message: `Element ${chalk.cyan(nodeType)} too long: actual ${length}, expected ${maxSize}`,
             rule: name,
-            line: node.location?.line || -1,
+            line: node.location?.line || 0,
         });
     }
 }

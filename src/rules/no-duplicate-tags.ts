@@ -1,4 +1,5 @@
 import { Examples, Feature, ResultError, Scenario } from "../types";
+import chalk from "chalk";
 
 const _ = require("lodash");
 
@@ -29,9 +30,9 @@ function verifyTags(node: Feature | Scenario | Examples, errors: ResultError[]) 
             if (!_.includes(failedTagNames, tag.name)) {
                 if (_.includes(uniqueTagNames, tag.name)) {
                     errors.push({
-                        message: `Duplicate tags are not allowed: ${tag.name}`,
+                        message: `Duplicate tags are not allowed: ${chalk.yellow(tag.name)}`,
                         rule: name,
-                        line: tag.location?.line || -1,
+                        line: tag.location?.line || 0,
                     });
                     failedTagNames.push(tag.name);
                 } else {

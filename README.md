@@ -1,5 +1,3 @@
-
-
 [![Travis](https://travis-ci.com/avysotskaya/gherkin-lint.svg?branch=master)](https://travis-ci.com/github/avysotskaya/gherkin-lint/branches)
 [![Coverage Status](https://coveralls.io/repos/github/avysotskaya/gherkin-lint/badge.svg?branch=master)](https://coveralls.io/github/avysotskaya/gherkin-lint?branch=master)
 
@@ -13,9 +11,11 @@ https://github.com/vsiakka/gherkin-lint
 The changes are:
 
 - The project has been rewritten to Typescript
-- Adds support for writing your own rules in Typescript
-- Adds support of error level
+- Supports for writing your own rules in Typescript
+- Supports error level (Error/Warn)
+- Pretty terminal output
 - Error output was changed from console to process.stdout, to have ability `yarn --silent lint:features > features-errors.log`
+- Fixed a number of issues that came from the original lib (incl. vsiakka#254: Using Rule keyword)
 - A couple more changes that will be described as soon as the project is finally stabilized
 
 ## Installation
@@ -30,7 +30,7 @@ git clone https://github.com/avysotskaya/gherkin-lint.git
 yarn demo
 ```
 Or check this:
-![console](https://user-images.githubusercontent.com/40882775/130507958-c696761e-5105-4ff1-9c4c-48df095b8c69.png)
+![console](https://user-images.githubusercontent.com/40882775/130609689-e03adc5b-f3a8-4825-a3ea-8bc7cc98dd2b.png)
 
 
 

@@ -25,6 +25,6 @@ function createError(background: Background): ResultError {
     return {
         message: "Backgrounds are not allowed when there is just one scenario.",
         rule: name,
-        line: background.location?.line || -1,
+        line: background.location?.line || 0,
     };
 }

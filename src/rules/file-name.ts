@@ -1,4 +1,5 @@
 import { Feature, ResultError } from "../types";
+import chalk from "chalk";
 
 const path = require("path");
 const _ = require("lodash");
@@ -29,7 +30,7 @@ export function run(feature: Feature, file, configuration): ResultError[] {
         return [];
     }
     return [{
-        message: `File names should be written in ${style} e.g. "${expected}.feature"`,
+        message: `File names should be written in ${style} e.g. "${chalk.cyan(`${expected}.feature`)}"`,
         rule: name,
         line: 0,
     }];

@@ -1,4 +1,5 @@
 import { Examples, Feature, ResultError, Scenario } from "../types";
+import chalk from "chalk";
 
 const _ = require("lodash");
 
@@ -25,9 +26,9 @@ export function run(feature: Feature): ResultError[] {
                 errors.push({
                     message: `${"All Examples of a Scenario Outline have the same tag(s), " +
                     "they should be defined on the Scenario Outline instead: "}${
-                        homogenousExampleTags.join(", ")}`,
+                        chalk.yellow(homogenousExampleTags.join(", "))}`,
                     rule: name,
-                    line: scenario.location?.line || -1,
+                    line: scenario.location?.line || 0,
                 });
             }
         }
@@ -37,9 +38,9 @@ export function run(feature: Feature): ResultError[] {
         errors.push({
             message: `${"All Scenarios on this Feature have the same tag(s), " +
             "they should be defined on the Feature instead: "}${
-                homogenousTags.join(", ")}`,
+                chalk.yellow(homogenousTags.join(", "))}`,
             rule: name,
-            line: feature.location?.line || -1,
+            line: feature.location?.line || 0,
         });
     }
     return errors;

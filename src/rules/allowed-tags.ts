@@ -1,4 +1,5 @@
 import { Examples, Feature, ResultError, Scenario, Tag } from "../types";
+import chalk from "chalk";
 
 const _ = require("lodash");
 
@@ -46,10 +47,10 @@ function isAllowed(tag, allowedTags, allowedPatterns) {
         || allowedPatterns.some((pattern) => pattern.test(tag.name));
 }
 
-function createError(node: Feature | Scenario | Examples, tag: Tag) {
+function createError(node: Feature | Scenario | Examples, tag: Tag): ResultError {
     return {
-        message: `Not allowed tag ${tag.name} on ${node.keyword}`,
+        message: `Not allowed tag ${chalk.yellow(tag.name)} on ${chalk.cyan(node.keyword)}`,
         rule: name,
-        line: tag.location?.line,
+        line: tag.location?.line || 0,
     };
 }

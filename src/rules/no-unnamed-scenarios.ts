@@ -9,7 +9,7 @@ export function run(feature: Feature): ResultError[] {
             errors.push({
                 message: "Missing Scenario name",
                 rule: name,
-                line: child.scenario.location?.line || -1,
+                line: child.scenario.location?.line || 0,
             });
         }
     });

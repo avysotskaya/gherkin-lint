@@ -1,4 +1,5 @@
 import { Feature, File, ResultError, Scenario } from "../types";
+import chalk from "chalk";
 
 export const name = "no-dupe-scenario-names";
 export const availableConfigs = [
@@ -36,9 +37,9 @@ function checkScenario(scenario: Scenario, file: File, errors: ResultError[]) {
                 line: scenario.location?.line,
             });
             errors.push({
-                message: `Scenario name is already used in: ${dupes}`,
+                message: `Scenario name is already used in: ${chalk.underline(dupes)}`,
                 rule: name,
-                line: scenario.location?.line || -1,
+                line: scenario.location?.line || 0,
             });
         } else {
             scenarios[scenario.name] = {

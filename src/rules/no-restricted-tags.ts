@@ -1,5 +1,6 @@
 import { Feature, ResultError, Tag } from "../types";
 import * as gherkinUtils from "./utils/gherkin";
+import chalk from "chalk";
 
 const _ = require("lodash");
 
@@ -39,7 +40,7 @@ function checkTags(node, language, forbiddenTags, forbiddenPatterns, errors) {
     node.tags.forEach(tag => {
         if (isForbidden(tag, forbiddenTags, forbiddenPatterns)) {
             errors.push({
-                message: `Forbidden tag ${tag.name} on ${nodeType}`,
+                message: `Forbidden tag ${chalk.yellow(tag.name)} on ${chalk.cyan(nodeType)}`,
                 rule: name,
                 line: tag.location.line,
             });

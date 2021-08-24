@@ -1,4 +1,5 @@
 import { Feature, ResultError } from "../types";
+import chalk from "chalk";
 
 export const name = "no-unused-variables";
 
@@ -67,7 +68,7 @@ export function run(feature: Feature): ResultError[] {
         for (const exampleVariable in examplesVariables) {
             if (!scenarioVariables[exampleVariable]) {
                 errors.push({
-                    message: `Examples table variable "${exampleVariable}" is not used in any step`,
+                    message: `Examples table variable "${chalk.yellow(exampleVariable)}" is not used in any step`,
                     rule: name,
                     line: examplesVariables[exampleVariable],
                 });
@@ -76,7 +77,7 @@ export function run(feature: Feature): ResultError[] {
         for (const scenarioVariable in scenarioVariables) {
             if (!examplesVariables[scenarioVariable]) {
                 errors.push({
-                    message: `Step variable "${scenarioVariable}" does not exist in the examples table`,
+                    message: `Step variable "${chalk.yellow(scenarioVariable)}" does not exist in the examples table`,
                     rule: name,
                     line: scenarioVariables[scenarioVariable],
                 });
