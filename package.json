@@ -1,6 +1,6 @@
 {
   "name": "gherkin-lint-ts",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "description": "Gherkin features linter written in Typescript",
   "main": "lib/src/index.js",
   "bin": {
@@ -69,7 +69,7 @@
     "compile": "tsc --build tsconfig.prod.json",
     "build": "yarn run clean && yarn run compile",
     "lint": "eslint './src/**/*.ts'",
-    "mocha": "cross-env TS_NODE_FILES=true mocha --exit -r ts-node/register --colors 'src/__tests__/**/*.spec.ts'",
+    "mocha": "cross-env TS_NODE_FILES=true mocha --exit -r ts-node/register/transpile-only --colors 'src/__tests__/**/*.spec.ts'",
     "prepare": "yarn lint && yarn mocha && yarn build",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "test": "yarn run lint && yarn run build && nyc yarn run mocha",

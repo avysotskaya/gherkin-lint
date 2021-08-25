@@ -1,4 +1,4 @@
-import { Feature, ResultError } from "../types";
+import { Feature, ResultError, File } from "../types";
 import chalk from "chalk";
 
 const path = require("path");
@@ -16,10 +16,7 @@ const checkers = {
     "snake_case": filename => _.snakeCase(filename),
 };
 
-export function run(feature: Feature, file, configuration): ResultError[] {
-    if (!file) {
-        return [];
-    }
+export function run(feature: Feature, file: File, configuration): ResultError[] {
     const { style } = _.merge(availableConfigs, configuration);
     const filename = path.basename(file.relativePath, ".feature");
     if (!checkers[style]) {

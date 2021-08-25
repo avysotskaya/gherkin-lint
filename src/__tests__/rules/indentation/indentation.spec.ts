@@ -3,7 +3,6 @@ import * as rule from "../../../rules/indentation";
 
 const runTest = createRuleTest(rule,
     'Wrong indentation for "<%= element %>", expected indentation level of <%= expected %>, but got <%= actual %>');
-
 const wrongIndentationErrors = [{
     messageElements: { element: "Feature", expected: 0, actual: 1 },
     line: 2,
@@ -32,6 +31,15 @@ const wrongIndentationErrors = [{
     messageElements: { element: "Scenario", expected: 0, actual: 3 },
     line: 14,
 }, {
+    messageElements: { element: "scenario tag", expected: 0, actual: 3 },
+    line: 12,
+}, {
+    messageElements: { element: "scenario tag", expected: 0, actual: 4 },
+    line: 13,
+}, {
+    messageElements: { element: "Step", expected: 2, actual: 3 },
+    line: 15,
+}, {
     messageElements: { element: "Examples", expected: 0, actual: 2 },
     line: 16,
 }, {
@@ -41,21 +49,15 @@ const wrongIndentationErrors = [{
     messageElements: { element: "example", expected: 2, actual: 4 },
     line: 18,
 }, {
-    messageElements: { element: "scenario tag", expected: 0, actual: 3 },
-    line: 12,
-}, {
-    messageElements: { element: "scenario tag", expected: 0, actual: 4 },
-    line: 13,
-}, {
-    messageElements: { element: "Step", expected: 2, actual: 3 },
-    line: 15,
+    messageElements: { element: "Rule", expected: 0, actual: 2 },
+    line: 20,
 }];
 describe("Indentation rule", function () {
-    it("doesn't raise errors when the default conifguration is used and there are no indentation violations (spaces)",
+    it("doesn't raise errors when the default configuration is used and there are no indentation violations (spaces)",
         function () {
             return runTest("indentation/CorrectIndentationSpaces.feature", {}, []);
         });
-    it("doesn't raise errors when the default conifguration is used are and there no indentation violations (tabs)",
+    it("doesn't raise errors when the default configuration is used are and there no indentation violations (tabs)",
         function () {
             return runTest("indentation/CorrectIndentationTabs.feature", {}, []);
         });
@@ -120,7 +122,7 @@ describe("Indentation rule", function () {
             "Scenario": 3,
         }, []);
     });
-    it("observe tag indentation settings when they are overriden", function () {
+    it("observe tag indentation settings when they are overridden", function () {
         return runTest("indentation/CorrectIndentationWithScenarioTagOverrides.feature", {
             "scenario tag": 3,
         }, []);

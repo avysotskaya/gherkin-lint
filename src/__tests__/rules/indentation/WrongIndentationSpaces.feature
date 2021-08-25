@@ -16,3 +16,9 @@ Given I have a Feature file with indentation all over the place
   Examples:
     | foo |
     | bar |
+
+  Rule: This is a Rule
+   @scenarioTag1 @scenarioTag2
+   @scenarioTag3
+  Example: This is an Example for indentation - spaces
+     Then I should see an indentation error

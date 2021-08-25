@@ -1,5 +1,7 @@
 import { createRuleTest } from "../rule-test-base";
 import * as rule from "../../../rules/file-name";
+import { readAndParseFile } from "../../../linter";
+import { expect } from "chai";
 
 const runTest = createRuleTest(rule,
     'File names should be written in <%= style %> e.g. "<%= corrected %>"');
@@ -198,6 +200,19 @@ describe("File Name Rule", function () {
                 messageElements: { style: "snake_case", corrected: "kebab_case.feature" },
                 line: 0,
             }]);
+        });
+    });
+    describe("when set up for unknown_case", () => {
+        it("raises errors for unknown_case", function () {
+            const configuration = {
+                "style": "unknown_case",
+            };
+            readAndParseFile(`src/__tests__/rules/file-name/PascalCaseWithFiveWords.feature`)
+                .then(({ feature, file }) => {
+                    expect(function () {
+                        rule.run(feature, file, configuration);
+                    }).to.throw("style \"unknown_case\" not supported for file-name rule");
+                });
         });
     });
 });
