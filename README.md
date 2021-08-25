@@ -1,5 +1,5 @@
 [![Travis](https://travis-ci.com/avysotskaya/gherkin-lint-ts.svg?branch=master)](https://travis-ci.com/github/avysotskaya/gherkin-lint-ts/branches)
-[![Coverage Status](https://coveralls.io/repos/github/avysotskaya/gherkin-lint/badge.svg?branch=master)](https://coveralls.io/github/avysotskaya/gherkin-lint?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/avysotskaya/gherkin-lint-ts/badge.svg?branch=master)](https://coveralls.io/github/avysotskaya/gherkin-lint-ts?branch=master)
 [![npm](https://img.shields.io/npm/v/gherkin-lint-ts.svg?maxAge=2592000)](https://www.npmjs.com/package/gherkin-lint-ts)
 
 # Gherkin lint
