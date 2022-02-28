@@ -3,8 +3,10 @@
   "no-unnamed-features": "error",
   "no-unnamed-scenarios": "error",
   "no-dupe-scenario-names": [
-    "error",
-    "in-feature"
+    "error", {
+      "scope": "in-feature",
+      "checkArguments": true
+    }
   ],
   "no-dupe-feature-names": "error",
   "no-partially-commented-tag-lines": "error",

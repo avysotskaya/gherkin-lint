@@ -233,25 +233,14 @@ To enable searching for duplicates in each individual feature (same scenario nam
 
 ```
 {
-  "no-dupe-scenario-names": ["error", "in-feature"]
+  "no-dupe-scenario-names": ["error", { checkArguments: false, scope: "in-feature" }]
 }
 ```
 
-The default case is testing against all the features (same scenario name in different features will raise an error). To get that behavor use the following configuration:
+The `no-dupe-scenario-names` supports some configuration options:
 
-```
-{
-  "no-dupe-scenario-names": "error"
-}
-```
-
-or
-
-```
-{
-  "no-dupe-scenario-names": ["error", "anywhere"]
-}
-```
+- `scope` ( `in-feature` | `anywhere` ) `anywhere` case is testing against all the features (same scenario name in different features will raise an error) - defaults to `in-feature`
+- `checkArguments` (boolean) if you use arguments in the test scenario name, use `true` to apply every example row for a Scenario Outline - defaults to `false`
 
 
 ### no-restricted-tags
