@@ -1,5 +1,5 @@
 import * as gherkinUtils from "./utils/gherkin";
-import { Feature, ResultError, Step, Tag } from "../types";
+import { Feature, ResultError, Scenario, Step, Tag } from "../types";
 import chalk from "chalk";
 
 const _ = require("lodash");
@@ -70,27 +70,32 @@ export function run(feature: Feature, unused, configuration): ResultError[] {
         });
     }
 
+    function testScenario(scenario: Scenario) {
+        test(scenario.location, "Scenario");
+        testTags(scenario.tags, "scenario tag");
+        scenario.steps?.forEach(testStep);
+        scenario.examples?.forEach(examples => {
+            test(examples.location, "Examples");
+            if (examples.tableHeader) {
+                test(examples.tableHeader.location, "example");
+                examples.tableBody?.forEach(row => {
+                    test(row.location, "example");
+                });
+            }
+        });
+    }
+
     test(feature.location, "Feature");
     testTags(feature.tags, "feature tag");
     feature.children?.forEach(child => {
         if (child.rule) {
             test(child.rule.location, "Rule");
+            child.rule.children.forEach(child => testScenario(child.scenario));
         } else if (child.background) {
             test(child.background.location, "Background");
             child.background.steps?.forEach(testStep);
-        } else {
-            test(child.scenario?.location, "Scenario");
-            testTags(child.scenario?.tags, "scenario tag");
-            child.scenario?.steps?.forEach(testStep);
-            child.scenario?.examples?.forEach(examples => {
-                test(examples.location, "Examples");
-                if (examples.tableHeader) {
-                    test(examples.tableHeader.location, "example");
-                    examples.tableBody?.forEach(row => {
-                        test(row.location, "example");
-                    });
-                }
-            });
+        } else if (child.scenario) {
+            testScenario(child.scenario);
         }
     });
     return errors;
