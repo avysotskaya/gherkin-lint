@@ -1,5 +1,5 @@
 import * as gherkinUtils from "./utils/gherkin";
-import { Feature, ResultError, Scenario, Step, Tag } from "../types";
+import { Examples, Feature, ResultError, Scenario, Step, Tag } from "../types";
 import chalk from "chalk";
 
 const _ = require("lodash");
@@ -74,11 +74,17 @@ export function run(feature: Feature, unused, configuration): ResultError[] {
         test(scenario.location, "Scenario");
         testTags(scenario.tags, "scenario tag");
         scenario.steps?.forEach(testStep);
-        scenario.examples?.forEach(examples => {
-            test(examples.location, "Examples");
-            if (examples.tableHeader) {
-                test(examples.tableHeader.location, "example");
-                examples.tableBody?.forEach(row => {
+        if (scenario.examples) {
+            testExamples(scenario.examples);
+        }
+    }
+
+    function testExamples(examples: Examples[]) {
+        examples.forEach(example => {
+            test(example.location, "Examples");
+            if (example.tableHeader) {
+                test(example.tableHeader.location, "example");
+                example.tableBody?.forEach(row => {
                     test(row.location, "example");
                 });
             }
@@ -90,7 +96,10 @@ export function run(feature: Feature, unused, configuration): ResultError[] {
     feature.children?.forEach(child => {
         if (child.rule) {
             test(child.rule.location, "Rule");
-            child.rule.children.forEach(child => testScenario(child.scenario));
+            if (child.rule.children) {
+                child.rule.children.forEach(ruleChild =>
+                    ruleChild.scenario?.examples && testExamples(ruleChild.scenario!.examples));
+            }
         } else if (child.background) {
             test(child.background.location, "Background");
             child.background.steps?.forEach(testStep);
