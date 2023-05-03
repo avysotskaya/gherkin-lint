@@ -20,7 +20,7 @@ Examples:
 
 Rule: This is a Rule
 
-	@scenarioTag1 @scenarioTag2
-	@scenarioTag3
-	Example: This is n Example with correct indentation - spaces
-		Then I should not see an indentation error
+@scenarioTag1 @scenarioTag2
+@scenarioTag3
+Example: This is n Example with correct indentation - spaces
+  Then I should not see an indentation error
