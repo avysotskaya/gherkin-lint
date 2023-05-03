@@ -163,7 +163,9 @@ You can override the defaults for `indentation` like this:
     "error", {
       "Feature": 0,
       "Background": 0,
+      "Rule": 0,
       "Scenario": 0,
+      "Example": 0,
       "Step": 2,
       "Examples": 0,
       "example": 2,

@@ -1,5 +1,5 @@
 import * as gherkinUtils from "./utils/gherkin";
-import { Feature, ResultError, Step, Tag } from "../types";
+import { Examples, Feature, ResultError, Scenario, Step, Tag } from "../types";
 import chalk from "chalk";
 
 const _ = require("lodash");
@@ -10,6 +10,7 @@ const defaultConfig = {
     "Background": 0,
     "Rule": 0,
     "Scenario": 0,
+    "Example": 0,
     "Step": 2,
     "Examples": 0,
     "example": 2,
@@ -32,6 +33,9 @@ function mergeConfiguration(configuration) {
     }
     if (!Object.prototype.hasOwnProperty.call(mergedConfiguration, "scenario tag")) {
         mergedConfiguration["scenario tag"] = mergedConfiguration["Scenario"];
+    }
+    if (!Object.prototype.hasOwnProperty.call(mergedConfiguration, "example tag")) {
+        mergedConfiguration["example tag"] = mergedConfiguration["Example"];
     }
     return mergedConfiguration;
 }
@@ -70,27 +74,55 @@ export function run(feature: Feature, unused, configuration): ResultError[] {
         });
     }
 
+    // In cucumber, Example is alias for Scenario
+    function testExample(scenario: Scenario) {
+        test(scenario.location, "Example");
+        testTags(scenario.tags, "example tag");
+        scenario.steps?.forEach(testStep);
+    }
+
+    // Applies to Scenario and Scenario Outline
+    function testScenario(scenario: Scenario) {
+        test(scenario.location, "Scenario");
+        testTags(scenario.tags, "scenario tag");
+        scenario.steps?.forEach(testStep);
+        if (scenario.examples) {
+            testExamples(scenario.examples);
+        }
+    }
+
+    function testExamples(examples: Examples[]) {
+        examples.forEach(example => {
+            test(example.location, "Examples");
+            if (example.tableHeader) {
+                test(example.tableHeader.location, "example");
+                example.tableBody?.forEach(row => {
+                    test(row.location, "example");
+                });
+            }
+        });
+    }
+
     test(feature.location, "Feature");
     testTags(feature.tags, "feature tag");
     feature.children?.forEach(child => {
         if (child.rule) {
             test(child.rule.location, "Rule");
+            if (child.rule.children) {
+                child.rule.children.forEach(ruleChild => {
+                    if (ruleChild.background) {
+                        test(ruleChild.background.location, "Background");
+                    }
+                    if (ruleChild.scenario) {
+                        testExample(ruleChild.scenario);
+                    }
+                });
+            }
         } else if (child.background) {
             test(child.background.location, "Background");
             child.background.steps?.forEach(testStep);
-        } else {
-            test(child.scenario?.location, "Scenario");
-            testTags(child.scenario?.tags, "scenario tag");
-            child.scenario?.steps?.forEach(testStep);
-            child.scenario?.examples?.forEach(examples => {
-                test(examples.location, "Examples");
-                if (examples.tableHeader) {
-                    test(examples.tableHeader.location, "example");
-                    examples.tableBody?.forEach(row => {
-                        test(row.location, "example");
-                    });
-                }
-            });
+        } else if (child.scenario) {
+            testScenario(child.scenario);
         }
     });
     return errors;

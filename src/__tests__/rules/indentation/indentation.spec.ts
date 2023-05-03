@@ -51,6 +51,18 @@ const wrongIndentationErrors = [{
 }, {
     messageElements: { element: "Rule", expected: 0, actual: 2 },
     line: 20,
+}, {
+    messageElements: { element: "Example", expected: 0, actual: 2 },
+    line: 23,
+}, {
+    messageElements: { element: "example tag", expected: 0, actual: 3 },
+    line: 21,
+}, {
+    messageElements: { element: "example tag", expected: 0, actual: 3 },
+    line: 22,
+}, {
+    messageElements: { element: "Step", expected: 2, actual: 5 },
+    line: 24,
 }];
 describe("Indentation rule", function () {
     it("doesn't raise errors when the default configuration is used and there are no indentation violations (spaces)",
@@ -126,6 +138,27 @@ describe("Indentation rule", function () {
         return runTest("indentation/CorrectIndentationWithScenarioTagOverrides.feature", {
             "scenario tag": 3,
         }, []);
+    });
+    it("detects errors in rules", function () {
+        const expectedErrors = [
+            {
+                messageElements: { element: "Rule", expected: 0, actual: 2 },
+                line: 3,
+            },
+            {
+                messageElements: { element: "example tag", expected: 0, actual: 4 },
+                line: 5,
+            },
+            {
+                messageElements: { element: "Step", expected: 2, actual: 4 },
+                line: 8,
+            },
+            {
+                messageElements: { element: "Example", expected: 0, actual: 2 },
+                line: 11,
+            },
+        ];
+        return runTest("indentation/WrongIndentationInRules.feature", {}, expectedErrors);
     });
     // TODO: add tests for partial configurations and fallbacks (eg rule for Step is used for Given, Then etc is rule for Given, Then, etc has not been specified)
 });
