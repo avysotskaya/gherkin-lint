@@ -3,10 +3,13 @@ import { Feature, ResultError } from "../types";
 const _ = require("lodash");
 
 export const name = "max-scenarios-per-file";
+type AvailableConfigs = { "maxScenarios": number; "countOutlineExamples": boolean; };
 const defaultConfig = {
     "maxScenarios": 10,
     "countOutlineExamples": true,
 };
+
+export const availableConfigs: AvailableConfigs = defaultConfig;
 
 export function run(feature: Feature, unused, config): ResultError[] {
     if (!feature) {
