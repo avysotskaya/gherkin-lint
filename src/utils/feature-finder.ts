@@ -45,7 +45,7 @@ export function getFeatureFiles(args: string[], ignoreArg?: any): any[] {
 }
 
 function getIgnorePatterns(ignoreArg) {
-    if (ignoreArg) {
+    if (ignoreArg.length > 0) {
         return ignoreArg;
     } else if (fs.existsSync(defaultIgnoreFileName)) {
     // return an array where each element of the array is a line of the ignore file
