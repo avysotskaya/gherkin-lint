@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import * as logger from "./utils/logger";
 import { getArgumentsParsed } from "./utils/argsParser";
 import { getFeatureFiles } from "./utils/feature-finder";
